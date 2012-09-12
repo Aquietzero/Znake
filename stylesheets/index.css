@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#GameLayer {
+  width: 800px;
+  height: 600px;
+  margin: 40px auto;
+}
+
+canvas {
+  margin: 0;
+  border: solid 1px black;
+}
