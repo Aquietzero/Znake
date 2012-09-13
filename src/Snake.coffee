@@ -8,11 +8,29 @@ class Snake
     @body = []
     for i in [0...7]
       grain = @map.$ 20, 20+i
-      grain.type = 1
+      grain.setType Type.SNAKE
       @body.push grain
 
   head: ->
     @body[0]
+
+  # If the new direction is the opposite of the current direction,
+  # then turning is not allowed.
+  isValidToTurn: (new_dir) ->
+    @dir.x + new_dir.x is 0 or @dir.y + new_dir.y is 0
+
+  isValidToMove: (pos) ->
+    return false unless @map.$(pos.x, pos.y)?.isType Type.GROUND, Type.FOOD
+    true
+
+  ateFood: (pos) ->
+    unless @map.$(pos.x, pos.y)?.isType Type.FOOD
+      false
+    else
+      food = @map.$(pos.x, pos.y)
+      food.reset()
+      @map.generateFood()
+      true
 
   turn: (dir) ->
     switch dir
@@ -25,34 +43,27 @@ class Snake
 
   move: ->
     head = @body[0]
+    next_pos = x: head.x+@dir.x, y: head.y+@dir.y
     
-    unless @isValidToMove head
+    unless @isValidToMove next_pos
       false
     else
-      new_head = @map.$ head.x+@dir.x, head.y+@dir.y
-      new_head.type = 1
-      @body.unshift new_head
+      # If eats something, then grow some length.
+      unless @ateFood next_pos
+        tail = @body.pop()
+        tail.reset()
 
-      tail = @body.pop()
-      tail.type = 0
-      tail.clear()
+      new_head = @map.$ next_pos.x, next_pos.y
+      new_head.setType Type.SNAKE
+      @body.unshift new_head
 
       @render()
       true
 
-  # If the new direction is the opposite of the current direction,
-  # then turning is not allowed.
-  isValidToTurn: (new_dir) ->
-    @dir.x + new_dir.x is 0 or @dir.y + new_dir.y is 0
-
-  isValidToMove: (head) ->
-    next_pos = x: head.x+@dir.x, y: head.y+@dir.y
-
-    unless @map.$(next_pos.x, next_pos.y)?.type is 0 then return false
-    true
-
   render: ->
-    @body[i].render("#{i+4}#{i+4}0000") for i in [0...@body.length]
+    for i in [0...@body.length]
+      red_degree = Math.floor(9 - 9 * i/@body.length)
+      @body[i].render "#{red_degree}#{red_degree}0000"
 
 
 @Snake = Snake

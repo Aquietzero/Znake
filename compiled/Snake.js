@@ -15,13 +15,37 @@
       this.body = [];
       for (i = _i = 0; _i < 7; i = ++_i) {
         grain = this.map.$(20, 20 + i);
-        grain.type = 1;
+        grain.setType(Type.SNAKE);
         this.body.push(grain);
       }
     }
 
     Snake.prototype.head = function() {
       return this.body[0];
+    };
+
+    Snake.prototype.isValidToTurn = function(new_dir) {
+      return this.dir.x + new_dir.x === 0 || this.dir.y + new_dir.y === 0;
+    };
+
+    Snake.prototype.isValidToMove = function(pos) {
+      var _ref;
+      if (!((_ref = this.map.$(pos.x, pos.y)) != null ? _ref.isType(Type.GROUND, Type.FOOD) : void 0)) {
+        return false;
+      }
+      return true;
+    };
+
+    Snake.prototype.ateFood = function(pos) {
+      var food, _ref;
+      if (!((_ref = this.map.$(pos.x, pos.y)) != null ? _ref.isType(Type.FOOD) : void 0)) {
+        return false;
+      } else {
+        food = this.map.$(pos.x, pos.y);
+        food.reset();
+        this.map.generateFood();
+        return true;
+      }
     };
 
     Snake.prototype.turn = function(dir) {
@@ -57,43 +81,33 @@
     };
 
     Snake.prototype.move = function() {
-      var head, new_head, tail;
+      var head, new_head, next_pos, tail;
       head = this.body[0];
-      if (!this.isValidToMove(head)) {
+      next_pos = {
+        x: head.x + this.dir.x,
+        y: head.y + this.dir.y
+      };
+      if (!this.isValidToMove(next_pos)) {
         return false;
       } else {
-        new_head = this.map.$(head.x + this.dir.x, head.y + this.dir.y);
-        new_head.type = 1;
+        if (!this.ateFood(next_pos)) {
+          tail = this.body.pop();
+          tail.reset();
+        }
+        new_head = this.map.$(next_pos.x, next_pos.y);
+        new_head.setType(Type.SNAKE);
         this.body.unshift(new_head);
-        tail = this.body.pop();
-        tail.type = 0;
-        tail.clear();
         this.render();
         return true;
       }
     };
 
-    Snake.prototype.isValidToTurn = function(new_dir) {
-      return this.dir.x + new_dir.x === 0 || this.dir.y + new_dir.y === 0;
-    };
-
-    Snake.prototype.isValidToMove = function(head) {
-      var next_pos, _ref;
-      next_pos = {
-        x: head.x + this.dir.x,
-        y: head.y + this.dir.y
-      };
-      if (((_ref = this.map.$(next_pos.x, next_pos.y)) != null ? _ref.type : void 0) !== 0) {
-        return false;
-      }
-      return true;
-    };
-
     Snake.prototype.render = function() {
-      var i, _i, _ref, _results;
+      var i, red_degree, _i, _ref, _results;
       _results = [];
       for (i = _i = 0, _ref = this.body.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        _results.push(this.body[i].render("" + (i + 4) + (i + 4) + "0000"));
+        red_degree = Math.floor(9 - 9 * i / this.body.length);
+        _results.push(this.body[i].render("" + red_degree + red_degree + "0000"));
       }
       return _results;
     };

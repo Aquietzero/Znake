@@ -14,7 +14,7 @@
       this.grains = {};
       for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
-          this.grains["" + x + "-" + y] = new Grain(x, y, this.grid_size, 0, this.context);
+          this.grains["" + x + "-" + y] = new Grain(x, y, this.grid_size, Type.GROUND, this.context);
         }
       }
     }
@@ -25,6 +25,25 @@
 
     Map.prototype.isContain = function(x, y) {
       return (0 <= x || x < this.width) && (0 <= y || y < this.height);
+    };
+
+    Map.prototype.generateFood = function() {
+      var food, grain, ground, index;
+      ground = (function() {
+        var _ref, _results;
+        _ref = this.grains;
+        _results = [];
+        for (index in _ref) {
+          grain = _ref[index];
+          if (grain.isType(Type.GROUND)) {
+            _results.push(grain);
+          }
+        }
+        return _results;
+      }).call(this);
+      food = ground[Utils.random(0, ground.length)];
+      food.setType(Type.FOOD);
+      return food.render('#ffff00');
     };
 
     Map.prototype.render = function() {
@@ -54,7 +73,7 @@
       _results = [];
       for (index in _ref) {
         grain = _ref[index];
-        _results.push(grain.render('#000033'));
+        _results.push(grain.render('#000000'));
       }
       return _results;
     };

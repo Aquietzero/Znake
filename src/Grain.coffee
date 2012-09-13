@@ -8,11 +8,11 @@ class Grain
   # (x, y)
   #   |  
   #   |          
-  #   `->┌───────┐---,
-  #      │       │   |
-  #      │       │ size 
-  #      │       │   |
-  #      └───────┘---'
+  #   `->┌───────┐ <---,
+  #      │       │     │ 
+  #      │       │      > size 
+  #      │       │     │ 
+  #      └───────┘ <---'
   #
   # TYPE
   #
@@ -22,7 +22,14 @@ class Grain
   #
   constructor: (@x, @y, @size, @type, @context) ->
 
-  clear: ->
+  setType: (type) ->
+    @type = type
+
+  isType: ->
+    @type in arguments
+
+  reset: ->
+    @setType Type.GROUND
     @render '#000000'
 
   render: (color) ->

@@ -2,19 +2,11 @@
 
 class Map
 
-  # The 2-d array of the map is like the following, in which the x, y represents
-  # the x, y, coordinates in each grain.
-  #
-  #   [ grain(0, 0), grain(1, 0), ... grain(w, 0) ]
-  #   [ grain(0, 1), grain(1, 1), ... grain(w, 1) ]
-  #         :            :                :
-  #         :            :                :
-  #         :            :                :
-  #   [ grain(0, h), grain(1, h), ... grain(w, h) ]
-  #
-  # The coordinate may look a little strange, that's because of the conflict
-  # between the coordinate system of canvas and the coordinate system defined by
-  # the 2-d array of the map.
+  # Since the coordinate of the canvas and the arrangement of the map
+  # array is quite different, so I decided not to use a 2-d array to 
+  # represent the map. Instead, I used an object whose keys are defined
+  # by the grain coordinate. If the coordinate of a grain is (x, y),
+  # then its key will be "x-y".
   constructor: (@grid_size, @context, @canvas) ->
     @width  = @canvas.width  / @grid_size
     @height = @canvas.height / @grid_size
@@ -22,13 +14,20 @@ class Map
     @grains = {}
     for x in [0...@width]
       for y in [0...@height]
-        @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, 0, @context
+        @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.GROUND, @context
 
+  # Returns the specific grain through its x, y coordinate.
   $: (x, y) ->
     @grains["#{x}-#{y}"]
 
   isContain: (x, y) ->
     (0 <= x or x < @width) and (0 <= y or y < @height)
+
+  generateFood: ->
+    ground = (grain for index, grain of @grains when grain.isType Type.GROUND)
+    food   = ground[Utils.random(0, ground.length)]
+    food.setType Type.FOOD
+    food.render '#ffff00'
 
   # Map is consist of two parts, the first part is a grid
   # layout, the second part is the obstacles.
@@ -52,7 +51,7 @@ class Map
     @context.stroke()
 
   renderGrains: ->
-    grain.render('#000033') for index, grain of @grains
+    grain.render('#000000') for index, grain of @grains
 
 
 @Map = Map
