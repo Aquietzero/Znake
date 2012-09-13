@@ -4,10 +4,11 @@
 
   Grain = (function() {
 
-    function Grain(x, y, size, context) {
+    function Grain(x, y, size, type, context) {
       this.x = x;
       this.y = y;
       this.size = size;
+      this.type = type;
       this.context = context;
     }
 

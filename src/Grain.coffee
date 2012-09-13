@@ -8,12 +8,19 @@ class Grain
   # (x, y)
   #   |  
   #   |          
-  #   `->┌──────┐---,
-  #      │      │   |
-  #      │      │ size 
-  #      │      │   |
-  #      └──────┘---'
-  constructor: (@x, @y, @size, @context) ->
+  #   `->┌───────┐---,
+  #      │       │   |
+  #      │       │ size 
+  #      │       │   |
+  #      └───────┘---'
+  #
+  # TYPE
+  #
+  #   0: Valid grains in the map.
+  #   1: Snake itself.
+  #   2: Boundary in the map.
+  #
+  constructor: (@x, @y, @size, @type, @context) ->
 
   clear: ->
     @render '#000000'

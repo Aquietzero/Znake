@@ -4,25 +4,25 @@
 
   Snake = (function() {
 
-    function Snake(grid_size, map, context) {
-      var i;
-      this.grid_size = grid_size;
+    function Snake(map, context) {
+      var grain, i, _i;
       this.map = map;
       this.context = context;
       this.dir = {
         x: 0,
         y: -1
       };
-      this.body = (function() {
-        var _i, _results;
-        _results = [];
-        for (i = _i = 0; _i < 7; i = ++_i) {
-          _results.push(new Grain(20, 20 + i, this.grid_size, this.context));
-        }
-        return _results;
-      }).call(this);
-      console.log(this.body);
+      this.body = [];
+      for (i = _i = 0; _i < 7; i = ++_i) {
+        grain = this.map.$(20, 20 + i);
+        grain.type = 1;
+        this.body.push(grain);
+      }
     }
+
+    Snake.prototype.head = function() {
+      return this.body[0];
+    };
 
     Snake.prototype.turn = function(dir) {
       var new_dir;
@@ -51,30 +51,49 @@
             y: 1
           };
       }
-      if (!this.isOpposite(this.dir, new_dir)) {
+      if (!this.isValidToTurn(new_dir)) {
         return this.dir = new_dir;
       }
     };
 
     Snake.prototype.move = function() {
-      var head, tail;
+      var head, new_head, tail;
       head = this.body[0];
-      this.body.unshift(new Grain(head.x + this.dir.x, head.y + this.dir.y, this.grid_size, this.context));
-      tail = this.body.pop();
-      tail.clear();
-      return this.render();
+      if (!this.isValidToMove(head)) {
+        return false;
+      } else {
+        new_head = this.map.$(head.x + this.dir.x, head.y + this.dir.y);
+        new_head.type = 1;
+        this.body.unshift(new_head);
+        tail = this.body.pop();
+        tail.type = 0;
+        tail.clear();
+        this.render();
+        return true;
+      }
     };
 
-    Snake.prototype.isOpposite = function(dir, new_dir) {
-      console.log(dir.y, new_dir.y);
-      return dir.x + new_dir.x === 0 || dir.y + new_dir.y === 0;
+    Snake.prototype.isValidToTurn = function(new_dir) {
+      return this.dir.x + new_dir.x === 0 || this.dir.y + new_dir.y === 0;
+    };
+
+    Snake.prototype.isValidToMove = function(head) {
+      var next_pos, _ref;
+      next_pos = {
+        x: head.x + this.dir.x,
+        y: head.y + this.dir.y
+      };
+      if (((_ref = this.map.$(next_pos.x, next_pos.y)) != null ? _ref.type : void 0) !== 0) {
+        return false;
+      }
+      return true;
     };
 
     Snake.prototype.render = function() {
       var i, _i, _ref, _results;
       _results = [];
       for (i = _i = 0, _ref = this.body.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        _results.push(this.body[i].render("" + (i + 3) + (i + 3) + "0000"));
+        _results.push(this.body[i].render("" + (i + 4) + (i + 4) + "0000"));
       }
       return _results;
     };

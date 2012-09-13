@@ -5,26 +5,34 @@
   Map = (function() {
 
     function Map(grid_size, context, canvas) {
-      var i, j, _i, _ref;
+      var x, y, _i, _j, _ref, _ref1;
       this.grid_size = grid_size;
       this.context = context;
       this.canvas = canvas;
       this.width = this.canvas.width / this.grid_size;
       this.height = this.canvas.height / this.grid_size;
-      this.map = [];
-      for (i = _i = 0, _ref = this.height; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        this.map.push((function() {
-          var _j, _ref1, _results;
-          _results = [];
-          for (j = _j = 0, _ref1 = this.width; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; j = 0 <= _ref1 ? ++_j : --_j) {
-            _results.push(0);
-          }
-          return _results;
-        }).call(this));
+      this.grains = {};
+      for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+        for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+          this.grains["" + x + "-" + y] = new Grain(x, y, this.grid_size, 0, this.context);
+        }
       }
     }
 
+    Map.prototype.$ = function(x, y) {
+      return this.grains["" + x + "-" + y];
+    };
+
+    Map.prototype.isContain = function(x, y) {
+      return (0 <= x || x < this.width) && (0 <= y || y < this.height);
+    };
+
     Map.prototype.render = function() {
+      this.renderGrid();
+      return this.renderGrains();
+    };
+
+    Map.prototype.renderGrid = function() {
       var i, _i, _j, _ref, _ref1, _ref2, _ref3;
       this.context.strokeStyle = '#111111';
       this.context.beginPath();
@@ -38,6 +46,17 @@
       }
       this.context.closePath();
       return this.context.stroke();
+    };
+
+    Map.prototype.renderGrains = function() {
+      var grain, index, _ref, _results;
+      _ref = this.grains;
+      _results = [];
+      for (index in _ref) {
+        grain = _ref[index];
+        _results.push(grain.render('#000033'));
+      }
+      return _results;
     };
 
     return Map;

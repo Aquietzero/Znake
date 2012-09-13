@@ -26,7 +26,7 @@ class GameLayer
     @map.render()
 
   initSnake: ->
-    @snake = new Snake 20, @map, @context
+    @snake = new Snake @map, @context
     @snake.render()
 
   initEvents: ->
@@ -39,9 +39,9 @@ class GameLayer
 
   run: ->
     update = =>
-      @snake.move()
+      alert 'Game Over!' unless @snake.move()
 
-    setInterval update, 100
+    setInterval update, 500
 
 
 @GameLayer = GameLayer

@@ -30,7 +30,7 @@
     };
 
     GameLayer.prototype.initSnake = function() {
-      this.snake = new Snake(20, this.map, this.context);
+      this.snake = new Snake(this.map, this.context);
       return this.snake.render();
     };
 
@@ -54,9 +54,11 @@
       var update,
         _this = this;
       update = function() {
-        return _this.snake.move();
+        if (!_this.snake.move()) {
+          return alert('Game Over!');
+        }
       };
-      return setInterval(update, 100);
+      return setInterval(update, 500);
     };
 
     return GameLayer;
