@@ -25,7 +25,7 @@
     };
 
     GameLayer.prototype.initMap = function() {
-      this.map = new Map(10, this.context, this.canvas);
+      this.map = new Map(8, this.context, this.canvas);
       return this.map.render();
     };
 
@@ -55,12 +55,13 @@
         _this = this;
       this.map.generateFood();
       update = function() {
+        _this.map.render();
         if (!_this.snake.move()) {
           alert('Game Over');
           return _this.stop();
         }
       };
-      return this.update_id = setInterval(update, 50);
+      return this.update_id = setInterval(update, 20);
     };
 
     GameLayer.prototype.stop = function() {

@@ -82,6 +82,7 @@
 
     Snake.prototype.move = function() {
       var head, new_head, next_pos, tail;
+      this.vibrate();
       head = this.body[0];
       next_pos = {
         x: head.x + this.dir.x,
@@ -100,6 +101,17 @@
         this.render();
         return true;
       }
+    };
+
+    Snake.prototype.vibrate = function() {
+      var grain, _i, _len, _ref, _results;
+      _ref = this.body;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        grain = _ref[_i];
+        _results.push(grain.value += 1);
+      }
+      return _results;
     };
 
     Snake.prototype.render = function() {

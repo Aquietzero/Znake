@@ -11,6 +11,7 @@
       this.size = size;
       this.type = type;
       this.context = context;
+      this.value = 0;
     }
 
     Grain.prototype.setType = function(type) {
@@ -22,14 +23,33 @@
       return _ref = this.type, __indexOf.call(arguments, _ref) >= 0;
     };
 
+    Grain.prototype.getColor = function() {
+      var grey;
+      if (this.value > 255) {
+        this.value = 255;
+      }
+      if (this.value < 0) {
+        this.value = 0;
+      }
+      grey = Math.floor(this.value).toString(16);
+      return "#" + grey + grey + grey;
+    };
+
     Grain.prototype.reset = function() {
       this.setType(Type.GROUND);
       return this.render('#000000');
     };
 
     Grain.prototype.render = function(color) {
+      switch (this.type) {
+        case Type.GROUND:
+          color = this.getColor();
+          break;
+        case Type.FOOD:
+          color = '#ffff00';
+      }
       this.context.fillStyle = color;
-      return this.context.fillRect(this.x * this.size + 1, this.y * this.size + 1, this.size - 2, this.size - 2);
+      return this.context.fillRect(this.x * this.size + 1, this.y * this.size + 1, this.size - 1, this.size - 1);
     };
 
     return Grain;

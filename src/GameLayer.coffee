@@ -22,7 +22,7 @@ class GameLayer
     @context.fillRect 0, 0, @width, @height
 
   initMap: ->
-    @map = new Map 10, @context, @canvas
+    @map = new Map 8, @context, @canvas
     @map.render()
 
   initSnake: ->
@@ -42,11 +42,12 @@ class GameLayer
     @map.generateFood()
 
     update = =>
+      @map.render()
       unless @snake.move()
         alert 'Game Over'
         @stop()
 
-    @update_id = setInterval update, 50
+    @update_id = setInterval update, 20
 
   stop: ->
     clearInterval @update_id

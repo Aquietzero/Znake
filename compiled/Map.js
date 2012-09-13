@@ -43,10 +43,43 @@
       }).call(this);
       food = ground[Utils.random(0, ground.length)];
       food.setType(Type.FOOD);
-      return food.render('#ffff00');
+      return food.render();
+    };
+
+    Map.prototype.wave = function() {
+      var down, left, mid, next, offset, right, up, x, xh, xl, y, yh, yl, _i, _j, _k, _ref, _ref1, _ref2, _results;
+      next = {};
+      for (y = _i = 0, _ref = this.height; 0 <= _ref ? _i < _ref : _i > _ref; y = 0 <= _ref ? ++_i : --_i) {
+        for (x = _j = 0, _ref1 = this.width; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+          xl = x === 0 ? this.width - 1 : x - 1;
+          xh = x === this.width - 1 ? 0 : x + 1;
+          yl = y === 0 ? this.height - 1 : y - 1;
+          yh = y === this.height - 1 ? 0 : y + 1;
+          up = this.grains["" + x + "-" + yl].value;
+          down = this.grains["" + x + "-" + yh].value;
+          left = this.grains["" + xl + "-" + y].value;
+          right = this.grains["" + xh + "-" + y].value;
+          mid = this.grains["" + x + "-" + y].value;
+          offset = (up + down + left + right) / 4 - mid;
+          next["" + x + "-" + y] = mid + offset * 0.9;
+        }
+      }
+      _results = [];
+      for (y = _k = 1, _ref2 = this.height - 1; 1 <= _ref2 ? _k < _ref2 : _k > _ref2; y = 1 <= _ref2 ? ++_k : --_k) {
+        _results.push((function() {
+          var _l, _ref3, _results1;
+          _results1 = [];
+          for (x = _l = 1, _ref3 = this.width - 1; 1 <= _ref3 ? _l < _ref3 : _l > _ref3; x = 1 <= _ref3 ? ++_l : --_l) {
+            _results1.push(this.grains["" + x + "-" + y].value = next["" + x + "-" + y]);
+          }
+          return _results1;
+        }).call(this));
+      }
+      return _results;
     };
 
     Map.prototype.render = function() {
+      this.wave();
       this.renderGrid();
       return this.renderGrains();
     };
@@ -55,11 +88,11 @@
       var i, _i, _j, _ref, _ref1, _ref2, _ref3;
       this.context.strokeStyle = '#111111';
       this.context.beginPath();
-      for (i = _i = 0, _ref = this.canvas.width, _ref1 = this.grid_size; 0 <= _ref ? _i <= _ref : _i >= _ref; i = _i += _ref1) {
+      for (i = _i = 0.5, _ref = this.canvas.width, _ref1 = this.grid_size; 0.5 <= _ref ? _i <= _ref : _i >= _ref; i = _i += _ref1) {
         this.context.moveTo(i, 0);
         this.context.lineTo(i, this.canvas.height);
       }
-      for (i = _j = 0, _ref2 = this.canvas.height, _ref3 = this.grid_size; 0 <= _ref2 ? _j <= _ref2 : _j >= _ref2; i = _j += _ref3) {
+      for (i = _j = 0.5, _ref2 = this.canvas.height, _ref3 = this.grid_size; 0.5 <= _ref2 ? _j <= _ref2 : _j >= _ref2; i = _j += _ref3) {
         this.context.moveTo(0, i);
         this.context.lineTo(this.canvas.width, i);
       }
@@ -73,7 +106,7 @@
       _results = [];
       for (index in _ref) {
         grain = _ref[index];
-        _results.push(grain.render('#000000'));
+        _results.push(grain.render());
       }
       return _results;
     };

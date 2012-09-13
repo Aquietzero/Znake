@@ -42,6 +42,8 @@ class Snake
     @dir = new_dir unless @isValidToTurn new_dir
 
   move: ->
+    @vibrate()
+
     head = @body[0]
     next_pos = x: head.x+@dir.x, y: head.y+@dir.y
     
@@ -59,6 +61,9 @@ class Snake
 
       @render()
       true
+
+  vibrate: ->
+    grain.value += 1 for grain in @body
 
   render: ->
     for i in [0...@body.length]

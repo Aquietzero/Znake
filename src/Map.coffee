@@ -27,11 +27,37 @@ class Map
     ground = (grain for index, grain of @grains when grain.isType Type.GROUND)
     food   = ground[Utils.random(0, ground.length)]
     food.setType Type.FOOD
-    food.render '#ffff00'
+    food.render()
+
+  wave: ->
+    next = {}
+
+    for y in [0...@height]
+      for x in [0...@width]
+
+        xl = if x is 0 then @width - 1 else x - 1
+        xh = if x is @width - 1 then 0 else x + 1
+        yl = if y is 0 then @height - 1 else y - 1
+        yh = if y is @height - 1 then 0 else y + 1
+
+        up    = @grains["#{x}-#{yl}"].value
+        down  = @grains["#{x}-#{yh}"].value
+        left  = @grains["#{xl}-#{y}"].value
+        right = @grains["#{xh}-#{y}"].value
+        mid   = @grains["#{x}-#{y}"].value
+
+        offset = (up + down + left + right) / 4 - mid
+        next["#{x}-#{y}"] = mid + offset * 0.9
+
+    for y in [1...@height-1]
+      for x in [1...@width-1]
+        @grains["#{x}-#{y}"].value = next["#{x}-#{y}"]
 
   # Map is consist of two parts, the first part is a grid
   # layout, the second part is the obstacles.
   render: ->
+    @wave()
+    
     @renderGrid()
     @renderGrains()
 
@@ -39,11 +65,11 @@ class Map
     @context.strokeStyle = '#111111'
 
     @context.beginPath()
-    for i in [0..@canvas.width] by @grid_size
+    for i in [0.5..@canvas.width] by @grid_size
       @context.moveTo i, 0
       @context.lineTo i, @canvas.height
 
-    for i in [0..@canvas.height] by @grid_size
+    for i in [0.5..@canvas.height] by @grid_size
       @context.moveTo 0, i
       @context.lineTo @canvas.width, i
     @context.closePath()
@@ -51,7 +77,8 @@ class Map
     @context.stroke()
 
   renderGrains: ->
-    grain.render('#000000') for index, grain of @grains
+    for index, grain of @grains
+      grain.render()
 
 
 @Map = Map
