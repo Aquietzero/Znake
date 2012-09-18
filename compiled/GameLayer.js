@@ -26,7 +26,7 @@
     };
 
     GameLayer.prototype.initMap = function() {
-      this.map = new Map(8, this.context, this.canvas);
+      this.map = new Map(10, this.context, this.canvas);
       this.map.generateFood();
       return this.map.render();
     };
@@ -64,7 +64,7 @@
           return _this.stop();
         }
       };
-      return this.run_id = setInterval(update, 10);
+      return this.run_id = setInterval(update, 30);
     };
 
     GameLayer.prototype.stop = function() {

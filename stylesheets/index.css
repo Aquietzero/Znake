@@ -12,4 +12,9 @@ body {
 canvas {
   margin: 0;
   border: solid 1px black;
+  /*
+  position: absolute;
+  left: 0;
+  top: 0;
+  */
 }

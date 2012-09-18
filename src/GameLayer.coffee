@@ -23,7 +23,7 @@ class GameLayer
     @context.fillRect 0, 0, @width, @height
 
   initMap: ->
-    @map = new Map 8, @context, @canvas
+    @map = new Map 10, @context, @canvas
     # GenerateFood for the first time.
     @map.generateFood()
     @map.render()
@@ -48,7 +48,7 @@ class GameLayer
         alert 'Game Over'
         @stop()
 
-    @run_id = setInterval update, 10
+    @run_id = setInterval update, 30
 
   stop: ->
     clearInterval @run_id

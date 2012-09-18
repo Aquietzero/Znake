@@ -5,6 +5,9 @@
   Utils = {
     random: function(begin, end) {
       return Math.floor(begin + Math.random() * (end - begin));
+    },
+    randomOne: function() {
+      return -1 + Math.random() * 2;
     }
   };
 
