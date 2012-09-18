@@ -1,13 +1,15 @@
 # Map
 
-class Map
+class Map extends Layer
 
   # Since the coordinate of the canvas and the arrangement of the map
   # array is quite different, so I decided not to use a 2-d array to 
   # represent the map. Instead, I used an object whose keys are defined
   # by the grain coordinate. If the coordinate of a grain is (x, y),
   # then its key will be "x-y".
-  constructor: (@grid_size, @context, @canvas) ->
+  constructor: (@grid_size, container, width, height) ->
+    super container, width, height
+
     @width  = @canvas.width  / @grid_size
     @height = @canvas.height / @grid_size
 
@@ -15,6 +17,8 @@ class Map
     for x in [0...@width]
       for y in [0...@height]
         @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.GROUND, @context
+
+    @renderGrid()
 
   # Returns the specific grain through its x, y coordinate.
   $: (x, y) ->
@@ -54,14 +58,12 @@ class Map
 
   # Map is consist of two parts, the first part is a grid
   # layout, the second part is the obstacles.
-  render: ->
+  update: ->
     @wave()
-    
-    # @renderGrid()
-    @renderGrains()
+    @updateGrains()
 
   renderGrid: ->
-    @context.strokeStyle = '#111111'
+    @context.strokeStyle = '#000000'
 
     @context.beginPath()
     for i in [0.5..@canvas.width] by @grid_size
@@ -75,7 +77,7 @@ class Map
 
     @context.stroke()
 
-  renderGrains: ->
+  updateGrains: ->
     for index, grain of @grains
       grain.render()
 

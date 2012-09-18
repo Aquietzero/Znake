@@ -1,8 +1,9 @@
 # Snake
 
-class Snake
+class Snake extends Layer
 
-  constructor: (@map, @context) ->
+  constructor: (@map, container, width, height) ->
+    super container, width, height
 
     @dir = { x: 0, y: -1 }
     @body = []
@@ -33,6 +34,7 @@ class Snake
       true
 
   turn: (dir) ->
+    console.log "turn #{dir}"
     switch dir
       when 'UP'    then new_dir = x :  0, y : -1
       when 'LEFT'  then new_dir = x : -1, y :  0
@@ -58,8 +60,6 @@ class Snake
       new_head = @map.$ next_pos.x, next_pos.y
       new_head.setType Type.SNAKE
       @body.unshift new_head
-
-      @render()
       true
 
   vibrate: ->
@@ -69,6 +69,10 @@ class Snake
     for i in [0...@body.length]
       red = Math.floor(9 - 9 * i/@body.length)
       @body[i].render "#{red}#{red}0000"
+
+  update: ->
+    @move()
+    @render()
 
 
 @Snake = Snake

@@ -24,7 +24,7 @@ class GameLayer
 
   initMap: ->
     @map = new Map 10, @context, @canvas
-    # GenerateFood for the first time.
+    # Generate Food for the first time.
     @map.generateFood()
     @map.render()
 
