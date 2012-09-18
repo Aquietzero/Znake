@@ -15,6 +15,7 @@
       this.initCanvas();
       this.initMap();
       this.initSnake();
+      this.status = 'RUNNING';
       this.initEvents();
     }
 
@@ -26,6 +27,7 @@
 
     GameLayer.prototype.initMap = function() {
       this.map = new Map(8, this.context, this.canvas);
+      this.map.generateFood();
       return this.map.render();
     };
 
@@ -46,6 +48,8 @@
             return _this.snake.turn('DOWN');
           case 37:
             return _this.snake.turn('LEFT');
+          case 32:
+            return _this.pause();
         }
       };
     };
@@ -53,7 +57,6 @@
     GameLayer.prototype.run = function() {
       var update,
         _this = this;
-      this.map.generateFood();
       update = function() {
         _this.map.render();
         if (!_this.snake.move()) {
@@ -61,11 +64,21 @@
           return _this.stop();
         }
       };
-      return this.update_id = setInterval(update, 10);
+      return this.run_id = setInterval(update, 10);
     };
 
     GameLayer.prototype.stop = function() {
-      return clearInterval(this.update_id);
+      return clearInterval(this.run_id);
+    };
+
+    GameLayer.prototype.pause = function() {
+      if (this.status === 'RUNNING') {
+        this.status = 'STOP';
+        return this.stop();
+      } else if (this.status === 'STOP') {
+        this.status = 'RUNNING';
+        return this.run();
+      }
     };
 
     return GameLayer;

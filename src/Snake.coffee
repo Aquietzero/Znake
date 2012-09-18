@@ -63,7 +63,7 @@ class Snake
       true
 
   vibrate: ->
-    @body[i].value += 3 for i in [0...4]
+    @body[i].value += 3 for i in [0...6]
 
   render: ->
     for i in [0...@body.length]

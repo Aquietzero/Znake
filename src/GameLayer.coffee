@@ -14,6 +14,7 @@ class GameLayer
     @initMap()
     @initSnake()
 
+    @status = 'RUNNING'
     @initEvents()
 
   initCanvas: ->
@@ -23,6 +24,8 @@ class GameLayer
 
   initMap: ->
     @map = new Map 8, @context, @canvas
+    # GenerateFood for the first time.
+    @map.generateFood()
     @map.render()
 
   initSnake: ->
@@ -36,21 +39,28 @@ class GameLayer
         when 39 then @snake.turn('RIGHT')
         when 40 then @snake.turn('DOWN')
         when 37 then @snake.turn('LEFT')
+        when 32 then @pause()
 
   run: ->
-    # GenerateFood for the first time.
-    @map.generateFood()
-
     update = =>
       @map.render()
       unless @snake.move()
         alert 'Game Over'
         @stop()
 
-    @update_id = setInterval update, 10
+    @run_id = setInterval update, 10
 
   stop: ->
-    clearInterval @update_id
+    clearInterval @run_id
+
+  pause: ->
+    if @status is 'RUNNING'
+      @status = 'STOP'
+      @stop()
+    else if @status is 'STOP'
+      @status = 'RUNNING'
+      @run()
+
 
 
 @GameLayer = GameLayer

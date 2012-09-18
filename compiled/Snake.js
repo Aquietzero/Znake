@@ -106,7 +106,7 @@
     Snake.prototype.vibrate = function() {
       var i, _i, _results;
       _results = [];
-      for (i = _i = 0; _i < 4; i = ++_i) {
+      for (i = _i = 0; _i < 6; i = ++_i) {
         _results.push(this.body[i].value += 3);
       }
       return _results;
