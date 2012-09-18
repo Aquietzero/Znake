@@ -67,8 +67,8 @@ class Snake
 
   render: ->
     for i in [0...@body.length]
-      red_degree = Math.floor(9 - 9 * i/@body.length)
-      @body[i].render "#{red_degree}#{red_degree}0000"
+      red = Math.floor(9 - 9 * i/@body.length)
+      @body[i].render "#{red}#{red}0000"
 
 
 @Snake = Snake

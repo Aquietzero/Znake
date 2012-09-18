@@ -113,11 +113,11 @@
     };
 
     Snake.prototype.render = function() {
-      var i, red_degree, _i, _ref, _results;
+      var i, red, _i, _ref, _results;
       _results = [];
       for (i = _i = 0, _ref = this.body.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        red_degree = Math.floor(9 - 9 * i / this.body.length);
-        _results.push(this.body[i].render("" + red_degree + red_degree + "0000"));
+        red = Math.floor(9 - 9 * i / this.body.length);
+        _results.push(this.body[i].render("" + red + red + "0000"));
       }
       return _results;
     };

@@ -21,7 +21,7 @@ class Map
     @grains["#{x}-#{y}"]
 
   isContain: (x, y) ->
-    (0 <= x or x < @width) and (0 <= y or y < @height)
+    0 <= x < @width and 0 <= y < @height
 
   generateFood: ->
     ground = (grain for index, grain of @grains when grain.isType Type.GROUND)
@@ -34,7 +34,6 @@ class Map
 
     for y in [0...@height]
       for x in [0...@width]
-
         xl = if x is 0 then @width - 1 else x - 1
         xh = if x is @width - 1 then 0 else x + 1
         yl = if y is 0 then @height - 1 else y - 1

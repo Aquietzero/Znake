@@ -14,12 +14,6 @@ class Grain
   #      │       │     │ 
   #      └───────┘ <---'
   #
-  # TYPE
-  #
-  #   0: Valid grains in the map.
-  #   1: Snake itself.
-  #   2: Boundary in the map.
-  #
   constructor: (@x, @y, @size, @type, @context) ->
     @value = 0
 
@@ -43,6 +37,7 @@ class Grain
 
   reset: ->
     @setType Type.GROUND
+    @value = 0
     @render '#000000'
 
   render: (color) ->

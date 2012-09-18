@@ -48,6 +48,7 @@
 
     Grain.prototype.reset = function() {
       this.setType(Type.GROUND);
+      this.value = 0;
       return this.render('#000000');
     };
 

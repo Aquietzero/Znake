@@ -24,7 +24,7 @@
     };
 
     Map.prototype.isContain = function(x, y) {
-      return (0 <= x || x < this.width) && (0 <= y || y < this.height);
+      return (0 <= x && x < this.width) && (0 <= y && y < this.height);
     };
 
     Map.prototype.generateFood = function() {
