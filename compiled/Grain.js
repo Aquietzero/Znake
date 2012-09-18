@@ -24,15 +24,26 @@
     };
 
     Grain.prototype.getColor = function() {
-      var grey;
-      if (this.value > 255) {
-        this.value = 255;
+      var blue, green;
+      if (this.value > 2) {
+        if (this.value > 255) {
+          this.value = 255;
+        }
+        if (this.value < 0) {
+          this.value = 0;
+        }
+        blue = Math.floor(this.value).toString(16);
+        if (blue.length === 1) {
+          blue += blue;
+        }
+        green = Math.floor(this.value / 5).toString(16);
+        if (green.length === 1) {
+          green += green;
+        }
+        return "#00" + green + blue;
+      } else {
+        return '#000011';
       }
-      if (this.value < 0) {
-        this.value = 0;
-      }
-      grey = Math.floor(this.value).toString(16);
-      return "#" + grey + grey + grey;
     };
 
     Grain.prototype.reset = function() {

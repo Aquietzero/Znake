@@ -104,12 +104,10 @@
     };
 
     Snake.prototype.vibrate = function() {
-      var grain, _i, _len, _ref, _results;
-      _ref = this.body;
+      var i, _i, _results;
       _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        grain = _ref[_i];
-        _results.push(grain.value += 1);
+      for (i = _i = 0; _i < 4; i = ++_i) {
+        _results.push(this.body[i].value += 3);
       }
       return _results;
     };

@@ -63,7 +63,7 @@ class Snake
       true
 
   vibrate: ->
-    grain.value += 1 for grain in @body
+    @body[i].value += 3 for i in [0...4]
 
   render: ->
     for i in [0...@body.length]

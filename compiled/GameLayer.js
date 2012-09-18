@@ -61,7 +61,7 @@
           return _this.stop();
         }
       };
-      return this.update_id = setInterval(update, 20);
+      return this.update_id = setInterval(update, 10);
     };
 
     GameLayer.prototype.stop = function() {

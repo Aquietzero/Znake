@@ -61,7 +61,7 @@
           right = this.grains["" + xh + "-" + y].value;
           mid = this.grains["" + x + "-" + y].value;
           offset = (up + down + left + right) / 4 - mid;
-          next["" + x + "-" + y] = mid + offset * 0.9;
+          next["" + x + "-" + y] = mid + offset * 0.8;
         }
       }
       _results = [];
@@ -80,7 +80,6 @@
 
     Map.prototype.render = function() {
       this.wave();
-      this.renderGrid();
       return this.renderGrains();
     };
 

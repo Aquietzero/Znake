@@ -30,10 +30,16 @@ class Grain
     @type in arguments
 
   getColor: ->
-    @value = 255 if @value > 255
-    @value =   0 if @value <   0
-    grey = Math.floor(@value).toString 16
-    "##{grey}#{grey}#{grey}"
+    if @value > 2
+      @value = 255 if @value > 255
+      @value =   0 if @value <   0
+      blue = Math.floor(@value).toString 16
+      blue += blue if blue.length is 1
+      green = Math.floor(@value / 5).toString 16
+      green += green if green.length is 1
+      "#00#{green}#{blue}"
+    else
+      '#000011'
 
   reset: ->
     @setType Type.GROUND

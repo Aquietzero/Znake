@@ -47,7 +47,7 @@ class Map
         mid   = @grains["#{x}-#{y}"].value
 
         offset = (up + down + left + right) / 4 - mid
-        next["#{x}-#{y}"] = mid + offset * 0.9
+        next["#{x}-#{y}"] = mid + offset * 0.8
 
     for y in [1...@height-1]
       for x in [1...@width-1]
@@ -58,7 +58,7 @@ class Map
   render: ->
     @wave()
     
-    @renderGrid()
+    # @renderGrid()
     @renderGrains()
 
   renderGrid: ->

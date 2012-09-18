@@ -47,7 +47,7 @@ class GameLayer
         alert 'Game Over'
         @stop()
 
-    @update_id = setInterval update, 20
+    @update_id = setInterval update, 10
 
   stop: ->
     clearInterval @update_id
