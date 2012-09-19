@@ -14,8 +14,7 @@ class Grain
   #      │       │     │ 
   #      └───────┘ <---'
   #
-  constructor: (@x, @y, @size, @type, @context) ->
-    @value = 0
+  constructor: (@x, @y, @size, @type, @value, @context) ->
 
   setType: (type) ->
     @type = type
@@ -23,7 +22,7 @@ class Grain
   isType: ->
     @type in arguments
 
-  getColor: ->
+  getWaterColor: ->
     if @value > 2
       @value = 255 if @value > 255
       @value =   0 if @value <   0
@@ -35,6 +34,11 @@ class Grain
     else
       '#000011'
 
+  getMountainColor: ->
+    brown = Math.floor(@value / 9 * 255).toString 16
+    brown += brown if brown.length is 1
+    "##{brown}#{brown}33"
+
   # Reset is basically used by snake since the water keeps flowing.
   reset: ->
     @context.clearRect @x*@size+1, @y*@size+1, @size-1, @size-1
@@ -43,8 +47,9 @@ class Grain
     # Only the snake grain will pass the color. Otherwise, decide
     # the color according to the type of grain. 
     switch @type
-      when Type.WATER then color = @getColor()
-      when Type.FOOD   then color = '#ffff00'
+      when Type.WATER    then color = @getWaterColor()
+      when Type.FOOD     then color = '#ffff00'
+      when Type.MOUNTAIN then color = @getMountainColor()
 
     @context.fillStyle = color
     @context.fillRect @x*@size+1, @y*@size+1, @size-1, @size-1

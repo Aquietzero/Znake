@@ -16,7 +16,17 @@ class Map extends Layer
     @grains = {}
     for x in [0...@width]
       for y in [0...@height]
+        ###
         @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.WATER, @context
+        ###
+        grain = MAP_1[y][x]
+        if grain is '0'
+          type = Type.WATER
+          value = 0
+        else
+          type = Type.MOUNTAIN
+          value = parseInt grain
+        @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, type, value, @context
 
     @renderGrid()
 
@@ -42,6 +52,8 @@ class Map extends Layer
 
     for y in [0...@height]
       for x in [0...@width]
+        continue unless @grains["#{x}-#{y}"].isType Type.WATER
+
         xl = if x is 0 then @width - 1 else x - 1
         xh = if x is @width - 1 then 0 else x + 1
         yl = if y is 0 then @height - 1 else y - 1
@@ -58,6 +70,8 @@ class Map extends Layer
 
     for y in [1...@height-1]
       for x in [1...@width-1]
+        continue unless @grains["#{x}-#{y}"].isType Type.WATER
+
         @grains["#{x}-#{y}"].value = next["#{x}-#{y}"]
 
   # Map is consist of two parts, the first part is a grid
@@ -65,7 +79,6 @@ class Map extends Layer
   update: ->
     @wave()
     @updateGrains()
-    true
 
   renderGrid: ->
     @context.strokeStyle = '#000000'

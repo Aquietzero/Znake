@@ -6,7 +6,7 @@ class Snake extends Layer
     super container, width, height
 
     @dir = { x: 0, y: -1 }
-    @body = (new Grain 20, 20+i, @map.grid_size, Type.SNAKE, @context for i in [0...7])
+    @body = (new Grain 20, 50+i, @map.grid_size, 0, Type.SNAKE, @context for i in [0...7])
 
   head: ->
     @body[0]
@@ -56,7 +56,7 @@ class Snake extends Layer
         tail.reset()
         @map.$(tail.x, tail.y).value = 0
 
-      new_head = new Grain next_pos.x, next_pos.y, @map.grid_size, Type.SNAKE, @context
+      new_head = new Grain next_pos.x, next_pos.y, @map.grid_size, Type.SNAKE, 0, @context
       @body.unshift new_head
       true
 

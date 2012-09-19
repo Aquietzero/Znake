@@ -9,7 +9,7 @@
     __extends(Map, _super);
 
     function Map(grid_size, container, width, height) {
-      var x, y, _i, _j, _ref, _ref1;
+      var grain, type, value, x, y, _i, _j, _ref, _ref1;
       this.grid_size = grid_size;
       Map.__super__.constructor.call(this, container, width, height);
       this.width = this.canvas.width / this.grid_size;
@@ -17,7 +17,19 @@
       this.grains = {};
       for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
-          this.grains["" + x + "-" + y] = new Grain(x, y, this.grid_size, Type.WATER, this.context);
+          /*
+                  @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.WATER, @context
+          */
+
+          grain = MAP_1[y][x];
+          if (grain === '0') {
+            type = Type.WATER;
+            value = 0;
+          } else {
+            type = Type.MOUNTAIN;
+            value = parseInt(grain);
+          }
+          this.grains["" + x + "-" + y] = new Grain(x, y, this.grid_size, type, value, this.context);
         }
       }
       this.renderGrid();
@@ -61,6 +73,9 @@
       next = {};
       for (y = _i = 0, _ref = this.height; 0 <= _ref ? _i < _ref : _i > _ref; y = 0 <= _ref ? ++_i : --_i) {
         for (x = _j = 0, _ref1 = this.width; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+          if (!this.grains["" + x + "-" + y].isType(Type.WATER)) {
+            continue;
+          }
           xl = x === 0 ? this.width - 1 : x - 1;
           xh = x === this.width - 1 ? 0 : x + 1;
           yl = y === 0 ? this.height - 1 : y - 1;
@@ -80,6 +95,9 @@
           var _l, _ref3, _results1;
           _results1 = [];
           for (x = _l = 1, _ref3 = this.width - 1; 1 <= _ref3 ? _l < _ref3 : _l > _ref3; x = 1 <= _ref3 ? ++_l : --_l) {
+            if (!this.grains["" + x + "-" + y].isType(Type.WATER)) {
+              continue;
+            }
             _results1.push(this.grains["" + x + "-" + y].value = next["" + x + "-" + y]);
           }
           return _results1;
@@ -90,8 +108,7 @@
 
     Map.prototype.update = function() {
       this.wave();
-      this.updateGrains();
-      return true;
+      return this.updateGrains();
     };
 
     Map.prototype.renderGrid = function() {

@@ -20,7 +20,7 @@
         var _i, _results;
         _results = [];
         for (i = _i = 0; _i < 7; i = ++_i) {
-          _results.push(new Grain(20, 20 + i, this.map.grid_size, Type.SNAKE, this.context));
+          _results.push(new Grain(20, 50 + i, this.map.grid_size, 0, Type.SNAKE, this.context));
         }
         return _results;
       }).call(this);
@@ -109,7 +109,7 @@
           tail.reset();
           this.map.$(tail.x, tail.y).value = 0;
         }
-        new_head = new Grain(next_pos.x, next_pos.y, this.map.grid_size, Type.SNAKE, this.context);
+        new_head = new Grain(next_pos.x, next_pos.y, this.map.grid_size, Type.SNAKE, 0, this.context);
         this.body.unshift(new_head);
         return true;
       }

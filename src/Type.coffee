@@ -3,7 +3,7 @@ Type =
   SNAKE    : 'SNAKE'
   WATER    : 'WATER'
   FOOD     : 'FOOD'
-  BOUNDARY : 'BOUNDARY'
+  MOUNTAIN : 'MOUNTAIN'
 
 
 @Type = Type

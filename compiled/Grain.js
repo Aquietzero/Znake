@@ -5,13 +5,13 @@
 
   Grain = (function() {
 
-    function Grain(x, y, size, type, context) {
+    function Grain(x, y, size, type, value, context) {
       this.x = x;
       this.y = y;
       this.size = size;
       this.type = type;
+      this.value = value;
       this.context = context;
-      this.value = 0;
     }
 
     Grain.prototype.setType = function(type) {
@@ -23,7 +23,7 @@
       return _ref = this.type, __indexOf.call(arguments, _ref) >= 0;
     };
 
-    Grain.prototype.getColor = function() {
+    Grain.prototype.getWaterColor = function() {
       var blue, green;
       if (this.value > 2) {
         if (this.value > 255) {
@@ -46,6 +46,15 @@
       }
     };
 
+    Grain.prototype.getMountainColor = function() {
+      var brown;
+      brown = Math.floor(this.value / 9 * 255).toString(16);
+      if (brown.length === 1) {
+        brown += brown;
+      }
+      return "#" + brown + brown + "33";
+    };
+
     Grain.prototype.reset = function() {
       return this.context.clearRect(this.x * this.size + 1, this.y * this.size + 1, this.size - 1, this.size - 1);
     };
@@ -53,10 +62,13 @@
     Grain.prototype.render = function(color) {
       switch (this.type) {
         case Type.WATER:
-          color = this.getColor();
+          color = this.getWaterColor();
           break;
         case Type.FOOD:
           color = '#ffff00';
+          break;
+        case Type.MOUNTAIN:
+          color = this.getMountainColor();
       }
       this.context.fillStyle = color;
       return this.context.fillRect(this.x * this.size + 1, this.y * this.size + 1, this.size - 1, this.size - 1);
