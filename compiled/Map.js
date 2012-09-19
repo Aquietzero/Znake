@@ -17,10 +17,6 @@
       this.grains = {};
       for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
-          /*
-                  @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.WATER, @context
-          */
-
           grain = MAP_1[y][x];
           if (grain === '0') {
             type = Type.WATER;

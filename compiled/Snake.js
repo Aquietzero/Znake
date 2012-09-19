@@ -101,7 +101,20 @@
         x: head.x + this.dir.x,
         y: head.y + this.dir.y
       };
+      if (next_pos.x === -1) {
+        next_pos.x = this.map.width - 1;
+      }
+      if (next_pos.x === this.map.width) {
+        next_pos.x = 0;
+      }
+      if (next_pos.y === -1) {
+        next_pos.y = this.map.height - 1;
+      }
+      if (next_pos.y === this.map.height) {
+        next_pos.y = 0;
+      }
       if (!this.isValidToMove(next_pos)) {
+        console.log(next_pos.x, next_pos.y);
         return false;
       } else {
         if (!this.ateFood(next_pos)) {

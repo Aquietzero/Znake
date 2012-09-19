@@ -16,9 +16,6 @@ class Map extends Layer
     @grains = {}
     for x in [0...@width]
       for y in [0...@height]
-        ###
-        @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.WATER, @context
-        ###
         grain = MAP_1[y][x]
         if grain is '0'
           type = Type.WATER

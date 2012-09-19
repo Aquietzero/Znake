@@ -4,9 +4,11 @@ body {
 }
 
 #GameLayer {
+  position: absolute;
+  top: 50px;
+  left: 250px;
   width: 800px;
   height: 600px;
-  margin: 40px auto;
 }
 
 canvas {

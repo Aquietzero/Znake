@@ -2,12 +2,12 @@
 
 class Layer
 
-  constructor: (container, @width, @height) ->
+  constructor: (@container, @width, @height) ->
     @canvas = document.createElement 'canvas'
     @canvas.width = width
     @canvas.height = height
 
-    document.getElementById(container).appendChild(@canvas)
+    document.getElementById(@container).appendChild(@canvas)
 
     @initCanvas()
 

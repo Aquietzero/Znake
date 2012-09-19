@@ -46,8 +46,15 @@ class Snake extends Layer
 
     head = @body[0]
     next_pos = x: head.x + @dir.x, y: head.y + @dir.y
+
+    # Circulate movements.
+    next_pos.x = @map.width - 1 if next_pos.x is -1
+    next_pos.x = 0 if next_pos.x is @map.width
+    next_pos.y = @map.height - 1 if next_pos.y is -1
+    next_pos.y = 0 if next_pos.y is @map.height
     
     unless @isValidToMove next_pos
+      console.log next_pos.x, next_pos.y
       false
     else
       # If eats something, then grow some length.
