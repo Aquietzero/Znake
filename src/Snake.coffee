@@ -17,8 +17,12 @@ class Snake extends Layer
     @dir.x + new_dir.x is 0 or @dir.y + new_dir.y is 0
 
   isValidToMove: (pos) ->
-    return false unless @map.$(pos.x, pos.y)?.isType Type.GROUND, Type.FOOD
-    true
+    unless @map.$(pos.x, pos.y)?.isType Type.WATER, Type.FOOD
+      false
+    else
+      for el in @body
+        return false if el.x is pos.x and el.y is pos.y
+      true
 
   ateFood: (pos) ->
     unless @map.$(pos.x, pos.y)?.isType Type.FOOD
@@ -66,8 +70,11 @@ class Snake extends Layer
       @body[i].render "#{red}0000"
 
   update: ->
-    @move()
-    @render()
+    unless @move()
+      alert 'Game Over'
+      false
+    else
+      @render()
 
 
 @Snake = Snake

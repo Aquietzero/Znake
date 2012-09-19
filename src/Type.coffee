@@ -1,7 +1,7 @@
 
 Type =
   SNAKE    : 'SNAKE'
-  GROUND   : 'GROUND'
+  WATER    : 'WATER'
   FOOD     : 'FOOD'
   BOUNDARY : 'BOUNDARY'
 

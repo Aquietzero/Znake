@@ -29,26 +29,21 @@ class Grain
       @value =   0 if @value <   0
       blue = Math.floor(@value).toString 16
       blue += blue if blue.length is 1
-      green = Math.floor(@value / 5).toString 16
+      green = Math.floor(@value / 4).toString 16
       green += green if green.length is 1
-      "#00#{green}#{blue}"
+      "##{green}00#{blue}"
     else
       '#000011'
 
+  # Reset is basically used by snake since the water keeps flowing.
   reset: ->
-    ###
-    @setType Type.GROUND
-    @value = 0
-    @render '#000000'
-    ###
-    # @render 'rgba(100, 100, 100, 0.5)'
     @context.clearRect @x*@size+1, @y*@size+1, @size-1, @size-1
 
   render: (color) ->
     # Only the snake grain will pass the color. Otherwise, decide
     # the color according to the type of grain. 
     switch @type
-      when Type.GROUND then color = @getColor()
+      when Type.WATER then color = @getColor()
       when Type.FOOD   then color = '#ffff00'
 
     @context.fillStyle = color

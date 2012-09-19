@@ -31,7 +31,8 @@ class Game
 
   run: ->
     update = =>
-      layer.update() for layer in @layers
+      for layer in @layers
+        @stop() unless layer.update()
 
     @run_id = setInterval update, 30
 

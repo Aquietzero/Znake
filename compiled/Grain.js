@@ -36,28 +36,23 @@
         if (blue.length === 1) {
           blue += blue;
         }
-        green = Math.floor(this.value / 5).toString(16);
+        green = Math.floor(this.value / 4).toString(16);
         if (green.length === 1) {
           green += green;
         }
-        return "#00" + green + blue;
+        return "#" + green + "00" + blue;
       } else {
         return '#000011';
       }
     };
 
     Grain.prototype.reset = function() {
-      /*
-          @setType Type.GROUND
-          @value = 0
-          @render '#000000'
-      */
       return this.context.clearRect(this.x * this.size + 1, this.y * this.size + 1, this.size - 1, this.size - 1);
     };
 
     Grain.prototype.render = function(color) {
       switch (this.type) {
-        case Type.GROUND:
+        case Type.WATER:
           color = this.getColor();
           break;
         case Type.FOOD:

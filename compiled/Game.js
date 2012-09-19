@@ -53,7 +53,11 @@
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           layer = _ref[_i];
-          _results.push(layer.update());
+          if (!layer.update()) {
+            _results.push(_this.stop());
+          } else {
+            _results.push(void 0);
+          }
         }
         return _results;
       };

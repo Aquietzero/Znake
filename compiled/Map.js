@@ -17,7 +17,7 @@
       this.grains = {};
       for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
-          this.grains["" + x + "-" + y] = new Grain(x, y, this.grid_size, Type.GROUND, this.context);
+          this.grains["" + x + "-" + y] = new Grain(x, y, this.grid_size, Type.WATER, this.context);
         }
       }
       this.renderGrid();
@@ -39,7 +39,7 @@
         _results = [];
         for (index in _ref) {
           grain = _ref[index];
-          if (grain.isType(Type.GROUND)) {
+          if (grain.isType(Type.WATER)) {
             _results.push(grain);
           }
         }
@@ -53,7 +53,7 @@
     Map.prototype.deleteFood = function(x, y) {
       var food;
       food = this.grains["" + x + "-" + y];
-      return food.setType(Type.GROUND);
+      return food.setType(Type.WATER);
     };
 
     Map.prototype.wave = function() {
@@ -90,7 +90,8 @@
 
     Map.prototype.update = function() {
       this.wave();
-      return this.updateGrains();
+      this.updateGrains();
+      return true;
     };
 
     Map.prototype.renderGrid = function() {

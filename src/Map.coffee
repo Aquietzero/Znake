@@ -16,7 +16,7 @@ class Map extends Layer
     @grains = {}
     for x in [0...@width]
       for y in [0...@height]
-        @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.GROUND, @context
+        @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.WATER, @context
 
     @renderGrid()
 
@@ -28,14 +28,14 @@ class Map extends Layer
     0 <= x < @width and 0 <= y < @height
 
   generateFood: ->
-    ground = (grain for index, grain of @grains when grain.isType Type.GROUND)
+    ground = (grain for index, grain of @grains when grain.isType Type.WATER)
     food   = ground[Utils.random(0, ground.length)]
     food.setType Type.FOOD
     food.render()
 
   deleteFood: (x, y) ->
     food = @grains["#{x}-#{y}"]
-    food.setType Type.GROUND
+    food.setType Type.WATER
 
   wave: ->
     next = {}
@@ -65,6 +65,7 @@ class Map extends Layer
   update: ->
     @wave()
     @updateGrains()
+    true
 
   renderGrid: ->
     @context.strokeStyle = '#000000'

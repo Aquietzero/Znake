@@ -35,11 +35,19 @@
     };
 
     Snake.prototype.isValidToMove = function(pos) {
-      var _ref;
-      if (!((_ref = this.map.$(pos.x, pos.y)) != null ? _ref.isType(Type.GROUND, Type.FOOD) : void 0)) {
+      var el, _i, _len, _ref, _ref1;
+      if (!((_ref = this.map.$(pos.x, pos.y)) != null ? _ref.isType(Type.WATER, Type.FOOD) : void 0)) {
         return false;
+      } else {
+        _ref1 = this.body;
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          el = _ref1[_i];
+          if (el.x === pos.x && el.y === pos.y) {
+            return false;
+          }
+        }
+        return true;
       }
-      return true;
     };
 
     Snake.prototype.ateFood = function(pos) {
@@ -134,8 +142,12 @@
     };
 
     Snake.prototype.update = function() {
-      this.move();
-      return this.render();
+      if (!this.move()) {
+        alert('Game Over');
+        return false;
+      } else {
+        return this.render();
+      }
     };
 
     return Snake;
