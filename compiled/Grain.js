@@ -47,9 +47,12 @@
     };
 
     Grain.prototype.reset = function() {
-      this.setType(Type.GROUND);
-      this.value = 0;
-      return this.render('#000000');
+      /*
+          @setType Type.GROUND
+          @value = 0
+          @render '#000000'
+      */
+      return this.context.clearRect(this.x * this.size + 1, this.y * this.size + 1, this.size - 1, this.size - 1);
     };
 
     Grain.prototype.render = function(color) {

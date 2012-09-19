@@ -50,6 +50,12 @@
       return food.render();
     };
 
+    Map.prototype.deleteFood = function(x, y) {
+      var food;
+      food = this.grains["" + x + "-" + y];
+      return food.setType(Type.GROUND);
+    };
+
     Map.prototype.wave = function() {
       var down, left, mid, next, offset, right, up, x, xh, xl, y, yh, yl, _i, _j, _k, _ref, _ref1, _ref2, _results;
       next = {};

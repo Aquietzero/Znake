@@ -36,9 +36,13 @@ class Grain
       '#000011'
 
   reset: ->
+    ###
     @setType Type.GROUND
     @value = 0
     @render '#000000'
+    ###
+    # @render 'rgba(100, 100, 100, 0.5)'
+    @context.clearRect @x*@size+1, @y*@size+1, @size-1, @size-1
 
   render: (color) ->
     # Only the snake grain will pass the color. Otherwise, decide

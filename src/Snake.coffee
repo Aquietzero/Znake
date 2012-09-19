@@ -6,11 +6,7 @@ class Snake extends Layer
     super container, width, height
 
     @dir = { x: 0, y: -1 }
-    @body = []
-    for i in [0...7]
-      grain = @map.$ 20, 20+i
-      grain.setType Type.SNAKE
-      @body.push grain
+    @body = (new Grain 20, 20+i, @map.grid_size, Type.SNAKE, @context for i in [0...7])
 
   head: ->
     @body[0]
@@ -28,13 +24,11 @@ class Snake extends Layer
     unless @map.$(pos.x, pos.y)?.isType Type.FOOD
       false
     else
-      food = @map.$(pos.x, pos.y)
-      food.reset()
+      @map.deleteFood pos.x, pos.y
       @map.generateFood()
       true
 
   turn: (dir) ->
-    console.log "turn #{dir}"
     switch dir
       when 'UP'    then new_dir = x :  0, y : -1
       when 'LEFT'  then new_dir = x : -1, y :  0
@@ -47,7 +41,7 @@ class Snake extends Layer
     @vibrate()
 
     head = @body[0]
-    next_pos = x: head.x+@dir.x, y: head.y+@dir.y
+    next_pos = x: head.x + @dir.x, y: head.y + @dir.y
     
     unless @isValidToMove next_pos
       false
@@ -56,19 +50,20 @@ class Snake extends Layer
       unless @ateFood next_pos
         tail = @body.pop()
         tail.reset()
+        @map.$(tail.x, tail.y).value = 0
 
-      new_head = @map.$ next_pos.x, next_pos.y
-      new_head.setType Type.SNAKE
+      new_head = new Grain next_pos.x, next_pos.y, @map.grid_size, Type.SNAKE, @context
       @body.unshift new_head
       true
 
   vibrate: ->
-    @body[i].value += 3 for i in [0...6]
+    @map.$(el.x, el.y).value += 3 for el, i in @body when i < 6
 
   render: ->
     for i in [0...@body.length]
-      red = Math.floor(9 - 9 * i/@body.length)
-      @body[i].render "#{red}#{red}0000"
+      red = Math.floor(15 - 15 * i / @body.length).toString 16
+      red += red if red.length is 1
+      @body[i].render "#{red}0000"
 
   update: ->
     @move()

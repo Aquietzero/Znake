@@ -8,7 +8,6 @@
       this.width = width;
       this.height = height;
       this.canvas = document.createElement('canvas');
-      this.canvas.id = 'GameCanvas';
       this.canvas.width = width;
       this.canvas.height = height;
       document.getElementById(container).appendChild(this.canvas);

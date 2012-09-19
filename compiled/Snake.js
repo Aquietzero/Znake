@@ -9,19 +9,21 @@
     __extends(Snake, _super);
 
     function Snake(map, container, width, height) {
-      var grain, i, _i;
+      var i;
       this.map = map;
       Snake.__super__.constructor.call(this, container, width, height);
       this.dir = {
         x: 0,
         y: -1
       };
-      this.body = [];
-      for (i = _i = 0; _i < 7; i = ++_i) {
-        grain = this.map.$(20, 20 + i);
-        grain.setType(Type.SNAKE);
-        this.body.push(grain);
-      }
+      this.body = (function() {
+        var _i, _results;
+        _results = [];
+        for (i = _i = 0; _i < 7; i = ++_i) {
+          _results.push(new Grain(20, 20 + i, this.map.grid_size, Type.SNAKE, this.context));
+        }
+        return _results;
+      }).call(this);
     }
 
     Snake.prototype.head = function() {
@@ -41,12 +43,11 @@
     };
 
     Snake.prototype.ateFood = function(pos) {
-      var food, _ref;
+      var _ref;
       if (!((_ref = this.map.$(pos.x, pos.y)) != null ? _ref.isType(Type.FOOD) : void 0)) {
         return false;
       } else {
-        food = this.map.$(pos.x, pos.y);
-        food.reset();
+        this.map.deleteFood(pos.x, pos.y);
         this.map.generateFood();
         return true;
       }
@@ -54,7 +55,6 @@
 
     Snake.prototype.turn = function(dir) {
       var new_dir;
-      console.log("turn " + dir);
       switch (dir) {
         case 'UP':
           new_dir = {
@@ -99,19 +99,23 @@
         if (!this.ateFood(next_pos)) {
           tail = this.body.pop();
           tail.reset();
+          this.map.$(tail.x, tail.y).value = 0;
         }
-        new_head = this.map.$(next_pos.x, next_pos.y);
-        new_head.setType(Type.SNAKE);
+        new_head = new Grain(next_pos.x, next_pos.y, this.map.grid_size, Type.SNAKE, this.context);
         this.body.unshift(new_head);
         return true;
       }
     };
 
     Snake.prototype.vibrate = function() {
-      var i, _i, _results;
+      var el, i, _i, _len, _ref, _results;
+      _ref = this.body;
       _results = [];
-      for (i = _i = 0; _i < 6; i = ++_i) {
-        _results.push(this.body[i].value += 3);
+      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+        el = _ref[i];
+        if (i < 6) {
+          _results.push(this.map.$(el.x, el.y).value += 3);
+        }
       }
       return _results;
     };
@@ -120,8 +124,11 @@
       var i, red, _i, _ref, _results;
       _results = [];
       for (i = _i = 0, _ref = this.body.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        red = Math.floor(9 - 9 * i / this.body.length);
-        _results.push(this.body[i].render("" + red + red + "0000"));
+        red = Math.floor(15 - 15 * i / this.body.length).toString(16);
+        if (red.length === 1) {
+          red += red;
+        }
+        _results.push(this.body[i].render("" + red + "0000"));
       }
       return _results;
     };

@@ -33,6 +33,10 @@ class Map extends Layer
     food.setType Type.FOOD
     food.render()
 
+  deleteFood: (x, y) ->
+    food = @grains["#{x}-#{y}"]
+    food.setType Type.GROUND
+
   wave: ->
     next = {}
 

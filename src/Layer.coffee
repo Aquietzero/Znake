@@ -4,7 +4,6 @@ class Layer
 
   constructor: (container, @width, @height) ->
     @canvas = document.createElement 'canvas'
-    @canvas.id = 'GameCanvas'
     @canvas.width = width
     @canvas.height = height
 
