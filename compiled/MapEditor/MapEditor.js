@@ -11,6 +11,7 @@
       this.layers = [];
       this.initEditor();
       this.initBrush();
+      this.initPanel();
       this.initEvents();
     }
 
@@ -20,13 +21,27 @@
     };
 
     MapEditor.prototype.initBrush = function() {
-      this.brush = new Brush(this.container, this.width, this.height);
+      this.brush = new Brush(this.editor, this.container, this.width, this.height);
       return this.layers.push(this.brush);
+    };
+
+    MapEditor.prototype.initPanel = function() {
+      return this.panel = new Panel(this.brush);
     };
 
     MapEditor.prototype.initEvents = function() {
       var _this = this;
-      return document.onkeydown = function(event) {};
+      document.onkeydown = function(event) {
+        switch (event.keyCode) {
+          case 219:
+            return _this.brush.shrink();
+          case 221:
+            return _this.brush.enlarge();
+        }
+      };
+      return $("#submit").click(function() {
+        return _this.editor.log();
+      });
     };
 
     MapEditor.prototype.run = function() {

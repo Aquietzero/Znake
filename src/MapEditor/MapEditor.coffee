@@ -6,6 +6,7 @@ class MapEditor
 
     @initEditor()
     @initBrush()
+    @initPanel()
 
     @initEvents()
 
@@ -14,12 +15,20 @@ class MapEditor
     @layers.push @editor
 
   initBrush: ->
-    @brush = new Brush @container, @width, @height
+    @brush = new Brush @editor, @container, @width, @height
     @layers.push @brush
+
+  initPanel: ->
+    @panel = new Panel @brush
 
   initEvents: ->
     document.onkeydown = (event) =>
-      # switch event.keyCode
+      switch event.keyCode
+        when 219 then @brush.shrink()
+        when 221 then @brush.enlarge()
+
+    $("#submit").click =>
+      @editor.log()
 
   run: ->
     update = =>

@@ -9,10 +9,17 @@
     __extends(Editor, _super);
 
     function Editor(grid_size, container, width, height) {
+      var x, y, _i, _j, _ref, _ref1;
       this.grid_size = grid_size;
       Editor.__super__.constructor.call(this, container, width, height);
-      this.renderGrains();
+      this.grains = {};
+      for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+        for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+          this.grains["" + x + "-" + y] = 0;
+        }
+      }
       this.renderGrid();
+      this.renderGrains();
     }
 
     Editor.prototype.renderGrid = function() {
@@ -31,9 +38,78 @@
       return this.context.stroke();
     };
 
+    Editor.prototype.setGrains = function(x, y, r, val) {
+      var i, j, offset, _i, _ref, _ref1, _results;
+      x = Math.floor(x / this.grid_size);
+      y = Math.floor(y / this.grid_size);
+      offset = Math.floor(r / this.grid_size);
+      _results = [];
+      for (i = _i = _ref = x - offset, _ref1 = x + offset; _ref <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = _ref <= _ref1 ? ++_i : --_i) {
+        _results.push((function() {
+          var _j, _ref2, _ref3, _results1;
+          _results1 = [];
+          for (j = _j = _ref2 = y - offset, _ref3 = y + offset; _ref2 <= _ref3 ? _j <= _ref3 : _j >= _ref3; j = _ref2 <= _ref3 ? ++_j : --_j) {
+            if ((i - x) * (i - x) + (j - y) * (j - y) <= offset * offset) {
+              this.grains["" + i + "-" + j] = val;
+              this.context.fillStyle = this.getColor(i, j);
+              _results1.push(this.context.fillRect(i * this.grid_size + 1, j * this.grid_size + 1, this.grid_size - 1, this.grid_size - 1));
+            } else {
+              _results1.push(void 0);
+            }
+          }
+          return _results1;
+        }).call(this));
+      }
+      return _results;
+    };
+
+    Editor.prototype.getColor = function(x, y) {
+      var brown, value;
+      value = this.grains["" + x + "-" + y];
+      if (value === 0) {
+        return '#001';
+      } else {
+        brown = Math.floor(value / 10 * 255).toString(16);
+        if (brown.length === 1) {
+          brown += brown;
+        }
+        return "#" + brown + brown + "66";
+      }
+    };
+
     Editor.prototype.renderGrains = function() {
-      this.context.fillStyle = '#001';
-      return this.context.fillRect(0, 0, this.width, this.height);
+      var x, y, _i, _ref, _results;
+      _results = [];
+      for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+        _results.push((function() {
+          var _j, _ref1, _results1;
+          _results1 = [];
+          for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+            this.context.fillStyle = this.getColor(x, y);
+            _results1.push(this.context.fillRect(x * this.grid_size + 1, y * this.grid_size + 1, this.grid_size - 1, this.grid_size - 1));
+          }
+          return _results1;
+        }).call(this));
+      }
+      return _results;
+    };
+
+    Editor.prototype.log = function() {
+      var line, map, x, y, _i, _ref;
+      map = [];
+      for (y = _i = 0, _ref = this.height / this.grid_size; 0 <= _ref ? _i < _ref : _i > _ref; y = 0 <= _ref ? ++_i : --_i) {
+        line = ((function() {
+          var _j, _ref1, _results;
+          _results = [];
+          for (x = _j = 0, _ref1 = this.width / this.grid_size; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+            _results.push(this.grains["" + x + "-" + y]);
+          }
+          return _results;
+        }).call(this)).join('');
+        map.push(line);
+      }
+      map = map.join('\n');
+      return console.log(map);
     };
 
     Editor.prototype.update = function() {};

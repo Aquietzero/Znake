@@ -8,13 +8,15 @@
 
     __extends(Brush, _super);
 
-    function Brush(container, width, height) {
+    function Brush(editor, container, width, height) {
+      this.editor = editor;
       Brush.__super__.constructor.call(this, container, width, height);
       this.x;
       this.y;
       this.r = 50;
+      this.v = 1;
       this.status = 'UP';
-      this.container = $('#' + this.container);
+      this.container = $("#" + this.container);
       this.initEvents();
     }
 
@@ -22,7 +24,10 @@
       var _this = this;
       document.onmousemove = function(event) {
         _this.x = event.clientX - _this.container.offset().left;
-        return _this.y = event.clientY - _this.container.offset().top;
+        _this.y = event.clientY - _this.container.offset().top;
+        if (_this.status === 'DOWN') {
+          return _this.editor.setGrains(_this.x, _this.y, _this.r, _this.v);
+        }
       };
       document.onmousedown = function(event) {
         return _this.status = 'DOWN';
@@ -30,6 +35,18 @@
       return document.onmouseup = function(event) {
         return _this.status = 'UP';
       };
+    };
+
+    Brush.prototype.shrink = function() {
+      if (this.r > 5) {
+        return this.r--;
+      }
+    };
+
+    Brush.prototype.enlarge = function() {
+      if (this.r < 100) {
+        return this.r++;
+      }
     };
 
     Brush.prototype.update = function() {

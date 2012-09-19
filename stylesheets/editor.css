@@ -17,11 +17,31 @@ h1 {
   height: 600px;
   width: 800px;
   margin-left: 50px;
-  border: dashed 1px #999;
 }
 
 canvas {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#panel li {
+  list-style-type: none;
+}
+
+.heightValue {
+  width: 100px;
+  height: 30px;
+  border: solid 1px black;
+  margin: 20px;
+}
+
+.heightValue:hover {
+  cursor: pointer;
 }

@@ -16,7 +16,7 @@ class Map extends Layer
     @grains = {}
     for x in [0...@width]
       for y in [0...@height]
-        grain = MAP_1[y][x]
+        grain = MAP_2[y][x]
         if grain is '0'
           type = Type.WATER
           value = 0

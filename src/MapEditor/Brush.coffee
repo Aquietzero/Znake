@@ -1,14 +1,15 @@
 
 class Brush extends Layer
 
-  constructor: (container, width, height) ->
+  constructor: (@editor, container, width, height) ->
     super container, width, height
 
     @x
     @y
     @r = 50
+    @v = 1
     @status = 'UP'
-    @container = $ '#' + @container
+    @container = $ "##{@container}"
 
     @initEvents()
 
@@ -16,12 +17,19 @@ class Brush extends Layer
     document.onmousemove = (event) =>
       @x = event.clientX - @container.offset().left
       @y = event.clientY - @container.offset().top
+      @editor.setGrains @x, @y, @r, @v if @status is 'DOWN'
 
     document.onmousedown = (event) =>
       @status = 'DOWN'
 
     document.onmouseup = (event) =>
       @status = 'UP'
+
+  shrink: ->
+    @r-- if @r > 5
+
+  enlarge: ->
+    @r++ if @r < 100
 
   update: ->
     @context.clearRect 0, 0, @width, @height
