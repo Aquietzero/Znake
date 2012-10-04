@@ -19,16 +19,23 @@
       var digit, _i, _results;
       _results = [];
       for (digit = _i = 0; _i < 3; digit = ++_i) {
-        _results.push(this.numbers.push(new Number(digit, 0)));
+        _results.push(this.numbers.push(new Number(digit, 0, this.context)));
       }
       return _results;
     };
 
     NumberBoard.prototype.setNumbers = function() {
-      var digit, _i, _results;
+      var digit, val, _i, _results;
+      val = this.value.toString();
+      if (val.length === 1) {
+        val = "00" + val;
+      }
+      if (val.length === 2) {
+        val = "0" + val;
+      }
       _results = [];
       for (digit = _i = 0; _i < 3; digit = ++_i) {
-        _results.push(this.numbers[digit].set(this.value[digit]));
+        _results.push(this.numbers[digit].set(val[digit]));
       }
       return _results;
     };
@@ -36,6 +43,10 @@
     NumberBoard.prototype.increase = function() {
       this.value++;
       return this.setNumbers();
+    };
+
+    NumberBoard.prototype.update = function() {
+      return true;
     };
 
     return NumberBoard;

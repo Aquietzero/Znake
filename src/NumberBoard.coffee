@@ -11,13 +11,21 @@ class NumberBoard extends Layer
     @initNumbers()
 
   initNumbers: ->
-    @numbers.push new Number(digit, 0) for digit in [0...3]
+    @numbers.push new Number(digit, 0, @context) for digit in [0...3]
 
   setNumbers: ->
-    @numbers[digit].set @value[digit] for digit in [0...3]
+    # Padding
+    val = @value.toString()
+    val = "00#{val}" if val.length is 1
+    val = "0#{val}" if val.length is 2
+
+    @numbers[digit].set val[digit] for digit in [0...3]
 
   increase: ->
     @value++
     @setNumbers()
+
+  update: ->
+    true
 
 @NumberBoard = NumberBoard

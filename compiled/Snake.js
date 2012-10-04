@@ -8,9 +8,10 @@
 
     __extends(Snake, _super);
 
-    function Snake(map, container, width, height) {
+    function Snake(map, numberBoard, container, width, height) {
       var i;
       this.map = map;
+      this.numberBoard = numberBoard;
       Snake.__super__.constructor.call(this, container, width, height);
       this.dir = {
         x: 0,
@@ -57,6 +58,7 @@
       } else {
         this.map.deleteFood(pos.x, pos.y);
         this.map.generateFood();
+        this.numberBoard.increase();
         return true;
       }
     };

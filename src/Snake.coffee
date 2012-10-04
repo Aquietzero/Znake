@@ -2,7 +2,7 @@
 
 class Snake extends Layer
 
-  constructor: (@map, container, width, height) ->
+  constructor: (@map, @numberBoard, container, width, height) ->
     super container, width, height
 
     @dir = { x: 0, y: -1 }
@@ -30,6 +30,7 @@ class Snake extends Layer
     else
       @map.deleteFood pos.x, pos.y
       @map.generateFood()
+      @numberBoard.increase()
       true
 
   turn: (dir) ->

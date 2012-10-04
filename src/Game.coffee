@@ -6,6 +6,7 @@ class Game
     @layers = []
 
     @initMap()
+    @initNumberBoard()
     @initSnake()
 
     @status = 'RUNNING'
@@ -17,8 +18,12 @@ class Game
     @layers.push @map
 
   initSnake: ->
-    @snake = new Snake @map, @container, @width, @height
+    @snake = new Snake @map, @numberBoard, @container, @width, @height
     @layers.push @snake
+
+  initNumberBoard: ->
+    @numberBoard = new NumberBoard @container, 200, 110
+    @layers.push @numberBoard
 
   initEvents: ->
     document.onkeydown = (event) =>

@@ -10,6 +10,7 @@
       this.height = height;
       this.layers = [];
       this.initMap();
+      this.initNumberBoard();
       this.initSnake();
       this.status = 'RUNNING';
       this.initEvents();
@@ -22,8 +23,13 @@
     };
 
     Game.prototype.initSnake = function() {
-      this.snake = new Snake(this.map, this.container, this.width, this.height);
+      this.snake = new Snake(this.map, this.numberBoard, this.container, this.width, this.height);
       return this.layers.push(this.snake);
+    };
+
+    Game.prototype.initNumberBoard = function() {
+      this.numberBoard = new NumberBoard(this.container, 200, 110);
+      return this.layers.push(this.numberBoard);
     };
 
     Game.prototype.initEvents = function() {
