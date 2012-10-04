@@ -19,9 +19,10 @@
     };
 
     Number.prototype.clear = function() {
-      var i, j, offset, pattern, _i, _results;
+      var i, j, offset, pattern, r, _i, _results;
       this.context.fillStyle = '#000011';
-      offset = Number.prototype.OFFSET * this.digit * 3;
+      r = Number.prototype.RESOLUTION;
+      offset = Number.prototype.OFFSET * this.digit * r;
       pattern = DIGITS[this.value];
       _results = [];
       for (i = _i = 0; _i < 11; i = ++_i) {
@@ -29,7 +30,7 @@
           var _j, _results1;
           _results1 = [];
           for (j = _j = 0; _j < 10; j = ++_j) {
-            _results1.push(this.context.fillRect(j * 3 + offset, i * 3, 2, 2));
+            _results1.push(this.context.fillRect(j * r + offset, i * r, r - 1, r - 1));
           }
           return _results1;
         }).call(this));
@@ -38,10 +39,11 @@
     };
 
     Number.prototype.render = function() {
-      var i, j, offset, pattern, _i, _results;
+      var i, j, offset, pattern, r, _i, _results;
       this.clear();
       this.context.fillStyle = '#ffff00';
-      offset = Number.prototype.OFFSET * this.digit * 3;
+      r = Number.prototype.RESOLUTION;
+      offset = Number.prototype.OFFSET * this.digit * r;
       pattern = DIGITS[this.value];
       _results = [];
       for (i = _i = 0; _i < 11; i = ++_i) {
@@ -50,7 +52,7 @@
           _results1 = [];
           for (j = _j = 0; _j < 10; j = ++_j) {
             if (pattern[i][j] === '1') {
-              _results1.push(this.context.fillRect(j * 3 + offset, i * 3, 2, 2));
+              _results1.push(this.context.fillRect(j * r + offset, i * r, r - 1, r - 1));
             } else {
               _results1.push(void 0);
             }
@@ -64,6 +66,8 @@
     return Number;
 
   })();
+
+  Number.prototype.RESOLUTION = 3;
 
   Number.prototype.OFFSET = 8;
 

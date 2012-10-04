@@ -116,7 +116,6 @@
         next_pos.y = 0;
       }
       if (!this.isValidToMove(next_pos)) {
-        console.log(next_pos.x, next_pos.y);
         return false;
       } else {
         if (!this.ateFood(next_pos)) {

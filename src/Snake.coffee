@@ -55,7 +55,6 @@ class Snake extends Layer
     next_pos.y = 0 if next_pos.y is @map.height
     
     unless @isValidToMove next_pos
-      console.log next_pos.x, next_pos.y
       false
     else
       # If eats something, then grow some length.

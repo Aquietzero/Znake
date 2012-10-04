@@ -135,24 +135,27 @@ class Number
 
   clear: ->
     @context.fillStyle = '#000011'
-    offset = Number::OFFSET * @digit * 3
+    r = Number::RESOLUTION
+    offset = Number::OFFSET * @digit * r
     pattern = DIGITS[@value]
 
     for i in [0...11]
       for j in [0...10]
-        @context.fillRect j*3 + offset, i*3, 2, 2
+        @context.fillRect j*r + offset, i*r, r-1, r-1
 
   render: ->
     @clear()
 
     @context.fillStyle = '#ffff00'
-    offset = Number::OFFSET * @digit * 3
+    r = Number::RESOLUTION
+    offset = Number::OFFSET * @digit * r
     pattern = DIGITS[@value]
 
     for i in [0...11]
       for j in [0...10]
-        @context.fillRect j*3 + offset, i*3, 2, 2 if pattern[i][j] is '1'
+        @context.fillRect j*r + offset, i*r, r-1, r-1 if pattern[i][j] is '1'
 
+Number::RESOLUTION = 3
 Number::OFFSET = 8
 Number::MARGIN = 10
 
