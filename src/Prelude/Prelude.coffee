@@ -6,14 +6,18 @@ class Prelude
     @layers = []
 
     @initStage()
+    @initTrack()
 
     @status = 'RUNNING'
     @initEvents()
 
   initStage: ->
     @stage = new Stage 10, @container, @width, @height
-    @stage.update()
-    # @layers.push @stage
+    @layers.push @stage
+
+  initTrack: ->
+    @track = new Track @stage, @container, @width, @height
+    @layers.push @track
 
   initEvents: ->
     document.onkeydown = (event) =>
@@ -23,7 +27,7 @@ class Prelude
   run: ->
     update = =>
       for layer in @layers
-        @stop() unless layer.update()
+        layer.update()
 
     @run_id = setInterval update, 30
 

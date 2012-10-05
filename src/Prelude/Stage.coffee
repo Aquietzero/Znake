@@ -13,12 +13,17 @@ class Stage extends Layer
       for y in [0...@height]
         @grains["#{x}-#{y}"] = new Grain x, y, @grid_size, Type.WATER, 0, @context
 
+    @render()
     @renderGrid()
 
   $: (x, y) ->
     @grains["#{x}-#{y}"]
 
   update: ->
+    # for index, grain of @grains
+    #  grain.render()
+
+  render: ->
     for index, grain of @grains
       grain.render()
 
