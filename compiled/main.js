@@ -2,9 +2,9 @@
 (function() {
 
   window.onload = function() {
-    var znake;
-    znake = new Game('GameLayer', 800, 600);
-    return znake.run();
+    var prelude;
+    prelude = new Prelude('GameLayer', 800, 600);
+    return prelude.run();
   };
 
 }).call(this);
