@@ -52,7 +52,7 @@ DIGITS = [
   ], [
     '0000000000'
     '0000111000'
-    '0011011000'
+    '0001011000'
     '0011011000'
     '0010011000'
     '0110011000'
@@ -66,8 +66,8 @@ DIGITS = [
     '0011111100'
     '0010001100'
     '0010000000'
+    '0010000000'
     '0011111000'
-    '0000001100'
     '0000001100'
     '0000001100'
     '0010001100'
@@ -141,19 +141,19 @@ class Number
 
     for i in [0...11]
       for j in [0...10]
-        @context.fillRect j*r + offset, i*r, r-1, r-1
+        @context.fillRect j*r + offset, i*r + 5, r-1, r-1
 
   render: ->
     @clear()
 
-    @context.fillStyle = '#ffff00'
+    @context.fillStyle = '#cc0000'
     r = Number::RESOLUTION
     offset = Number::OFFSET * @digit * r
     pattern = DIGITS[@value]
 
     for i in [0...11]
       for j in [0...10]
-        @context.fillRect j*r + offset, i*r, r-1, r-1 if pattern[i][j] is '1'
+        @context.fillRect j*r + offset, i*r + 5, r-1, r-1 if pattern[i][j] is '1'
 
 Number::RESOLUTION = 3
 Number::OFFSET = 8

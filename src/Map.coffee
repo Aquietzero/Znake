@@ -75,6 +75,10 @@ class Map extends Layer
 
         @grains["#{x}-#{y}"].value = next["#{x}-#{y}"]
 
+  updateGrains: ->
+    for index, grain of @grains
+      grain.render()
+
   # Map is consist of two parts, the first part is a grid
   # layout, the second part is the obstacles.
   update: ->
@@ -95,10 +99,6 @@ class Map extends Layer
     @context.closePath()
 
     @context.stroke()
-
-  updateGrains: ->
-    for index, grain of @grains
-      grain.render()
 
 
 @Map = Map

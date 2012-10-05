@@ -96,6 +96,17 @@
       return _results;
     };
 
+    Map.prototype.updateGrains = function() {
+      var grain, index, _ref, _results;
+      _ref = this.grains;
+      _results = [];
+      for (index in _ref) {
+        grain = _ref[index];
+        _results.push(grain.render());
+      }
+      return _results;
+    };
+
     Map.prototype.update = function() {
       this.wave();
       return this.updateGrains();
@@ -115,17 +126,6 @@
       }
       this.context.closePath();
       return this.context.stroke();
-    };
-
-    Map.prototype.updateGrains = function() {
-      var grain, index, _ref, _results;
-      _ref = this.grains;
-      _results = [];
-      for (index in _ref) {
-        grain = _ref[index];
-        _results.push(grain.render());
-      }
-      return _results;
     };
 
     return Map;
