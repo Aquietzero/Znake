@@ -5,8 +5,12 @@ class Track extends Layer
   constructor: (@map, container, width, height) ->
     super container, width, height
 
-    @dir = { x: 0, y: -1 }
-    @body = (new Grain 20, 50+i, @map.grid_size, 0, Type.SNAKE, @context for i in [0...7])
+    @dir = { x: -1, y: 0 }
+    @body = (new Grain 80+i, 40, @map.grid_size, 0, Type.SNAKE, @context for i in [0...7])
+
+  setActions: (actions) ->
+    @actions = actions
+    @frame = 0
 
   head: ->
     @body[0]
@@ -18,7 +22,7 @@ class Track extends Layer
       when 'RIGHT' then new_dir = x :  1, y :  0
       when 'DOWN'  then new_dir = x :  0, y :  1
 
-    @dir = new_dir unless @isValidToTurn new_dir
+    @dir = new_dir
 
   move: ->
     head = @body[0]
@@ -31,7 +35,7 @@ class Track extends Layer
     next_pos.y = 0 if next_pos.y is @map.height
     
     tail = @body.pop()
-    tail.reset()
+    # tail.reset()
 
     new_head = new Grain next_pos.x, next_pos.y, @map.grid_size, Type.SNAKE, 0, @context
     @body.unshift new_head
@@ -44,6 +48,9 @@ class Track extends Layer
       @body[i].render "#{red}0000"
 
   update: ->
+    @turn @actions[@frame] if @frame < @actions.length
+    @frame++
+      
     @move()
     @render()
 

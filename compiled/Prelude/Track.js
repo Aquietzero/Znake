@@ -13,18 +13,23 @@
       this.map = map;
       Track.__super__.constructor.call(this, container, width, height);
       this.dir = {
-        x: 0,
-        y: -1
+        x: -1,
+        y: 0
       };
       this.body = (function() {
         var _i, _results;
         _results = [];
         for (i = _i = 0; _i < 7; i = ++_i) {
-          _results.push(new Grain(20, 50 + i, this.map.grid_size, 0, Type.SNAKE, this.context));
+          _results.push(new Grain(80 + i, 40, this.map.grid_size, 0, Type.SNAKE, this.context));
         }
         return _results;
       }).call(this);
     }
+
+    Track.prototype.setActions = function(actions) {
+      this.actions = actions;
+      return this.frame = 0;
+    };
 
     Track.prototype.head = function() {
       return this.body[0];
@@ -57,9 +62,7 @@
             y: 1
           };
       }
-      if (!this.isValidToTurn(new_dir)) {
-        return this.dir = new_dir;
-      }
+      return this.dir = new_dir;
     };
 
     Track.prototype.move = function() {
@@ -82,7 +85,6 @@
         next_pos.y = 0;
       }
       tail = this.body.pop();
-      tail.reset();
       new_head = new Grain(next_pos.x, next_pos.y, this.map.grid_size, Type.SNAKE, 0, this.context);
       this.body.unshift(new_head);
       return true;
@@ -102,6 +104,10 @@
     };
 
     Track.prototype.update = function() {
+      if (this.frame < this.actions.length) {
+        this.turn(this.actions[this.frame]);
+      }
+      this.frame++;
       this.move();
       return this.render();
     };
