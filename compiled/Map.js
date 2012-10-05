@@ -40,19 +40,13 @@
     };
 
     Map.prototype.generateFood = function() {
-      var food, grain, ground, index;
-      ground = (function() {
-        var _ref, _results;
-        _ref = this.grains;
-        _results = [];
-        for (index in _ref) {
-          grain = _ref[index];
-          if (grain.isType(Type.WATER)) {
-            _results.push(grain);
-          }
+      var food, ground, x, y, _i, _j, _ref, _ref1;
+      ground = [];
+      for (x = _i = 2, _ref = this.width - 2; 2 <= _ref ? _i < _ref : _i > _ref; x = 2 <= _ref ? ++_i : --_i) {
+        for (y = _j = 2, _ref1 = this.height - 2; 2 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 2 <= _ref1 ? ++_j : --_j) {
+          ground.push(this.grains["" + x + "-" + y]);
         }
-        return _results;
-      }).call(this);
+      }
       food = ground[Utils.random(0, ground.length)];
       food.setType(Type.FOOD);
       return food.render();

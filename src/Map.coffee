@@ -35,7 +35,11 @@ class Map extends Layer
     0 <= x < @width and 0 <= y < @height
 
   generateFood: ->
-    ground = (grain for index, grain of @grains when grain.isType Type.WATER)
+    # ground = (grain for index, grain of @grains when grain.isType Type.WATER)
+    ground = []
+    for x in [2...@width-2]
+      for y in [2...@height-2]
+        ground.push @grains["#{x}-#{y}"]
     food   = ground[Utils.random(0, ground.length)]
     food.setType Type.FOOD
     food.render()
