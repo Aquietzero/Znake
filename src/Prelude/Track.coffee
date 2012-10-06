@@ -52,7 +52,7 @@ class Track extends Layer
     for i in [0...@body.length]
       red = Math.floor(15 - 15 * i / @body.length).toString 16
       red += red if red.length is 1
-      @body[i].render "#{red}0000"
+      @body[i].render "#{red}#{red}00"
 
   update: ->
     if @actions[@frame] is 'REFRAIN'

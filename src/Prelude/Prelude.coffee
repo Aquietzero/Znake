@@ -57,9 +57,6 @@ class Prelude
 
   run: ->
     update = =>
-      # for layer in @layers
-      #   layer.update()
-
       # This layer remove operation changes the relative order between
       # two layers.
       for i in [0...@layers.length]
@@ -67,7 +64,7 @@ class Prelude
           @layers[i] = @layers[@layers.length - 1]
           @layers.pop()
 
-    @run_id = setInterval update, 30
+    @run_id = setInterval update, 20
 
   stop: ->
     clearInterval @run_id

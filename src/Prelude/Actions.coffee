@@ -19,6 +19,7 @@ Actions =
   N: [
     'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP'
     'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP'
+    'UP', 'DOWN'
     'RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN'
     'RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT'
     'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP'
@@ -29,6 +30,7 @@ Actions =
   A: [
     'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP', 'UP'
     'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT'
+    'UP', 'DOWN'
     'RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN'
     'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN'
     'REFRAIN'
@@ -38,8 +40,10 @@ Actions =
     'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN'
     'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'DOWN'
     'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT'
-    'UP', 'LEFT', 'UP', 'LEFT', 'UP', 'LEFT', 'UP', 'LEFT', 'UP', 'LEFT', 'UP', 'LEFT', 'UP'
-    'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT'
+    'UP', 'LEFT', 'UP', 'LEFT', 'UP', 'LEFT', 'UP', 'LEFT'
+    'UP', 'LEFT', 'UP', 'LEFT', 'UP', 'LEFT', 'UP'
+    'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT'
+    'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT'
     'REFRAIN'
   ]
 

@@ -101,7 +101,7 @@
         if (red.length === 1) {
           red += red;
         }
-        _results.push(this.body[i].render("" + red + "0000"));
+        _results.push(this.body[i].render("" + red + red + "00"));
       }
       return _results;
     };

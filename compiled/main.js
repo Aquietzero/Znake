@@ -2,9 +2,16 @@
 (function() {
 
   window.onload = function() {
-    var prelude;
+    var prelude,
+      _this = this;
     prelude = new Prelude('GameLayer', 800, 600);
-    return prelude.run();
+    prelude.run();
+    return document.onkeydown = function(event) {
+      var znake;
+      prelude.stop();
+      znake = new Game('GameLayer', 800, 600);
+      return znake.run();
+    };
   };
 
 }).call(this);

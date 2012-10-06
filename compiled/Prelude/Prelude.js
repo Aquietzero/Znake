@@ -113,7 +113,7 @@
         }
         return _results;
       };
-      return this.run_id = setInterval(update, 30);
+      return this.run_id = setInterval(update, 20);
     };
 
     Prelude.prototype.stop = function() {
