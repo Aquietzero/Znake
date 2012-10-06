@@ -28,11 +28,55 @@
       };
       pos = {
         x: 80,
-        y: 40
+        y: 30
       };
-      this.track = new Track(this.stage, dir, pos, this.container, this.width, this.height);
-      this.track.setActions(['LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'REFRAIN']);
-      return this.layers.push(this.track);
+      this.track_z = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_z.setActions(Actions.Z);
+      this.layers.push(this.track_z);
+      dir = {
+        x: 0,
+        y: -1
+      };
+      pos = {
+        x: 20,
+        y: 42
+      };
+      this.track_n = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_n.setActions(Actions.N);
+      this.layers.push(this.track_n);
+      dir = {
+        x: 0,
+        y: -1
+      };
+      pos = {
+        x: 30,
+        y: 38
+      };
+      this.track_a = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_a.setActions(Actions.A);
+      this.layers.push(this.track_a);
+      dir = {
+        x: 0,
+        y: 1
+      };
+      pos = {
+        x: 42,
+        y: 10
+      };
+      this.track_k = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_k.setActions(Actions.K);
+      this.layers.push(this.track_k);
+      dir = {
+        x: -1,
+        y: 0
+      };
+      pos = {
+        x: 80,
+        y: 33
+      };
+      this.track_e = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_e.setActions(Actions.E);
+      return this.layers.push(this.track_e);
     };
 
     Prelude.prototype.initEvents = function() {
