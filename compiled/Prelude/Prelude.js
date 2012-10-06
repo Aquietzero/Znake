@@ -21,8 +21,17 @@
     };
 
     Prelude.prototype.initTrack = function() {
-      this.track = new Track(this.stage, this.container, this.width, this.height);
-      this.track.setActions(['LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT']);
+      var dir, pos;
+      dir = {
+        x: -1,
+        y: 0
+      };
+      pos = {
+        x: 80,
+        y: 40
+      };
+      this.track = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track.setActions(['LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'REFRAIN']);
       return this.layers.push(this.track);
     };
 
@@ -48,12 +57,15 @@
       var update,
         _this = this;
       update = function() {
-        var layer, _i, _len, _ref, _results;
-        _ref = _this.layers;
+        var i, _i, _ref, _results;
         _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          layer = _ref[_i];
-          _results.push(layer.update());
+        for (i = _i = 0, _ref = _this.layers.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+          if (!_this.layers[i].update()) {
+            _this.layers[i] = _this.layers[_this.layers.length - 1];
+            _results.push(_this.layers.pop());
+          } else {
+            _results.push(void 0);
+          }
         }
         return _results;
       };

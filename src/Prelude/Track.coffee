@@ -2,15 +2,23 @@
 
 class Track extends Layer
 
-  constructor: (@map, container, width, height) ->
+  constructor: (@map, @origin_dir, @origin_pos, container, width, height) ->
     super container, width, height
 
-    @dir = { x: -1, y: 0 }
-    @body = (new Grain 80+i, 40, @map.grid_size, 0, Type.SNAKE, @context for i in [0...7])
+    @dir = @origin_dir
+    x = @origin_pos.x
+    y = @origin_pos.y
+    @body = (new Grain x+i, y, @map.grid_size, 0, Type.SNAKE, @context for i in [0...7])
 
   setActions: (actions) ->
     @actions = actions
     @frame = 0
+
+  reset: ->
+    @dir = @origin_dir
+    x = @origin_pos.x
+    y = @origin_pos.y
+    @body = (new Grain x+i, y, @map.grid_size, 0, Type.SNAKE, @context for i in [0...7])
 
   head: ->
     @body[0]
@@ -48,6 +56,9 @@ class Track extends Layer
       @body[i].render "#{red}0000"
 
   update: ->
+    if @actions[@frame] is 'REFRAIN'
+      @frame = 0
+      @reset()
     @turn @actions[@frame] if @frame < @actions.length
     @frame++
       

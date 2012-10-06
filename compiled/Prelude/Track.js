@@ -8,19 +8,20 @@
 
     __extends(Track, _super);
 
-    function Track(map, container, width, height) {
-      var i;
+    function Track(map, origin_dir, origin_pos, container, width, height) {
+      var i, x, y;
       this.map = map;
+      this.origin_dir = origin_dir;
+      this.origin_pos = origin_pos;
       Track.__super__.constructor.call(this, container, width, height);
-      this.dir = {
-        x: -1,
-        y: 0
-      };
+      this.dir = this.origin_dir;
+      x = this.origin_pos.x;
+      y = this.origin_pos.y;
       this.body = (function() {
         var _i, _results;
         _results = [];
         for (i = _i = 0; _i < 7; i = ++_i) {
-          _results.push(new Grain(80 + i, 40, this.map.grid_size, 0, Type.SNAKE, this.context));
+          _results.push(new Grain(x + i, y, this.map.grid_size, 0, Type.SNAKE, this.context));
         }
         return _results;
       }).call(this);
@@ -29,6 +30,21 @@
     Track.prototype.setActions = function(actions) {
       this.actions = actions;
       return this.frame = 0;
+    };
+
+    Track.prototype.reset = function() {
+      var i, x, y;
+      this.dir = this.origin_dir;
+      x = this.origin_pos.x;
+      y = this.origin_pos.y;
+      return this.body = (function() {
+        var _i, _results;
+        _results = [];
+        for (i = _i = 0; _i < 7; i = ++_i) {
+          _results.push(new Grain(x + i, y, this.map.grid_size, 0, Type.SNAKE, this.context));
+        }
+        return _results;
+      }).call(this);
     };
 
     Track.prototype.head = function() {
@@ -104,6 +120,10 @@
     };
 
     Track.prototype.update = function() {
+      if (this.actions[this.frame] === 'REFRAIN') {
+        this.frame = 0;
+        this.reset();
+      }
       if (this.frame < this.actions.length) {
         this.turn(this.actions[this.frame]);
       }
