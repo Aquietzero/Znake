@@ -19,3 +19,12 @@ canvas {
   left: 0;
   top: 0;
 }
+
+#introduction {
+  color: #999;
+  margin: 0;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 180px;
+}
