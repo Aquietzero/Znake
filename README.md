@@ -2,6 +2,8 @@
 
 Though there are many snake games already, I think I may regret if I don't implement this classic game on my own for even once. I tried to make it a little different so I added the wavy effect. Hope you enjoy it!
 
+[Click here to play](http://aquietzero.github.com/Znake)
+
 ## Licence
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
