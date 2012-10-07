@@ -35,7 +35,11 @@ canvas {
   font-family: arcade, sans-serif;
 }
 
-.important {
+#introduction h1 {
+  color: #ddd;
+}
+
+#introduction .important {
   color: red;
   font-weight: bold;
 }

@@ -39,7 +39,7 @@ class Game
       for layer in @layers
         @stop() unless layer.update()
 
-    @run_id = setInterval update, 30
+    @run_id = setInterval update, 50
 
   stop: ->
     clearInterval @run_id

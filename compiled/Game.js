@@ -67,7 +67,7 @@
         }
         return _results;
       };
-      return this.run_id = setInterval(update, 30);
+      return this.run_id = setInterval(update, 50);
     };
 
     Game.prototype.stop = function() {
