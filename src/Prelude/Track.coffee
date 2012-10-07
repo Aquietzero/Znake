@@ -47,7 +47,6 @@ class Track extends Layer
     next_pos.y = 0 if next_pos.y is @map.height
     
     tail = @body.pop()
-    # tail.reset()
 
     new_head = new Grain next_pos.x, next_pos.y, @map.grid_size, Type.SNAKE, 0, @context
     @body.unshift new_head
@@ -65,13 +64,6 @@ class Track extends Layer
       blue += blue if blue.length is 1
 
       @body[i].render "#{red}#{green}#{blue}"
-
-    ###
-    for i in [0...@body.length]
-      red = Math.floor(15 - 15 * i / @body.length).toString 16
-      red += red if red.length is 1
-      @body[i].render "#{red}#{red}00"
-    ###
 
   update: ->
     if @actions[@frame] is 'REFRAIN'

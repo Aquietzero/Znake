@@ -116,13 +116,6 @@
         _results.push(this.body[i].render("" + red + green + blue));
       }
       return _results;
-      /*
-          for i in [0...@body.length]
-            red = Math.floor(15 - 15 * i / @body.length).toString 16
-            red += red if red.length is 1
-            @body[i].render "#{red}#{red}00"
-      */
-
     };
 
     Track.prototype.update = function() {
