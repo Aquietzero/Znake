@@ -1,0 +1,45 @@
+@font-face {
+  font-family: arcade;
+  src: url('./8bitlimit/8bitlim.ttf');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+#GameLayer {
+  position: absolute;
+  top: 50px;
+  left: 250px;
+  width: 800px;
+  height: 600px;
+}
+
+canvas {
+  margin: 0;
+  border: solid 1px black;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#introduction {
+  color: #999;
+  margin: 0;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 180px;
+  font-family: arcade, sans-serif;
+}
+
+#introduction h1 {
+  color: #ddd;
+}
+
+#introduction .important {
+  color: red;
+  font-weight: bold;
+}
