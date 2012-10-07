@@ -1,3 +1,8 @@
+@font-face {
+  font-family: arcade;
+  src: url('./8bitlimit/8bitlim.ttf');
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -27,6 +32,7 @@ canvas {
   top: 50px;
   left: 50px;
   width: 180px;
+  font-family: arcade, sans-serif;
 }
 
 .important {
