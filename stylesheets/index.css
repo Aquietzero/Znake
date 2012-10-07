@@ -28,3 +28,8 @@ canvas {
   left: 50px;
   width: 180px;
 }
+
+.important {
+  color: red;
+  font-weight: bold;
+}

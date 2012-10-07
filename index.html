@@ -1,36 +1,46 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="UTF-8" />
     <title>Znake</title>
     <link rel="stylesheet" href="stylesheets/index.css" type="text/css" />
 
-    <script type="text/javascript" src="compiled/Core/Utils.js"></script>
-    <script type="text/javascript" src="compiled/Core/Vector.js"></script>
+    <script type="text/javascript" src="./compiled/Core/Utils.js"></script>
+    <script type="text/javascript" src="./compiled/Core/Vector.js"></script>
 
-    <script type="text/javascript" src="compiled/Maps/default.js"></script>
-    <script type="text/javascript" src="compiled/Maps/map1.js"></script>
-    <script type="text/javascript" src="compiled/Maps/map2.js"></script>
+    <script type="text/javascript" src="./compiled/Maps/default.js"></script>
+    <script type="text/javascript" src="./compiled/Maps/map1.js"></script>
+    <script type="text/javascript" src="./compiled/Maps/map2.js"></script>
 
-    <script type="text/javascript" src="compiled/Core/Type.js"></script>
-    <script type="text/javascript" src="compiled/Core/Layer.js"></script>
-    <script type="text/javascript" src="compiled/Core/Grain.js"></script>
-    <script type="text/javascript" src="compiled/Core/Number.js"></script>
+    <script type="text/javascript" src="./compiled/Core/Type.js"></script>
+    <script type="text/javascript" src="./compiled/Core/Layer.js"></script>
+    <script type="text/javascript" src="./compiled/Core/Grain.js"></script>
+    <script type="text/javascript" src="./compiled/Core/Number.js"></script>
 
-    <script type="text/javascript" src="compiled/Prelude/Stage.js"></script>
-    <script type="text/javascript" src="compiled/Prelude/Track.js"></script>
-    <script type="text/javascript" src="compiled/Prelude/Actions.js"></script>
-    <script type="text/javascript" src="compiled/Prelude/Prelude.js"></script>
+    <script type="text/javascript" src="./compiled/Prelude/Stage.js"></script>
+    <script type="text/javascript" src="./compiled/Prelude/Track.js"></script>
+    <script type="text/javascript" src="./compiled/Prelude/Actions.js"></script>
+    <script type="text/javascript" src="./compiled/Prelude/Prelude.js"></script>
 
-    <script type="text/javascript" src="compiled/Map.js"></script>
-    <script type="text/javascript" src="compiled/Snake.js"></script>
-    <script type="text/javascript" src="compiled/NumberBoard.js"></script>
-    <script type="text/javascript" src="compiled/Game.js"></script>
-    <script type="text/javascript" src="compiled/main.js"></script>
+    <script type="text/javascript" src="./compiled/Map.js"></script>
+    <script type="text/javascript" src="./compiled/Snake.js"></script>
+    <script type="text/javascript" src="./compiled/NumberBoard.js"></script>
+    <script type="text/javascript" src="./compiled/Game.js"></script>
+    <script type="text/javascript" src="./compiled/main.js"></script>
+
+    <script src="./lib/Detector.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      if (!Detector.chrome) {
+        window.location = './notsupported.html';
+      }
+    </script>
   </head>
   <body>
     <div id="introduction">
       <h1>Znake</h1>
       <span class="subtitle">Another snake game</span>
+
+      <p class="important">Please use chrome to get the best experience.</p>
       <p>
         <strong>Press any key to start the game. Arrow keys to control the snake, whitespace to pause. F5 to restart the game.</strong>
       </p>

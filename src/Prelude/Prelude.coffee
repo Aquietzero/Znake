@@ -46,8 +46,6 @@ class Prelude
 
   run: ->
     update = =>
-      # This layer remove operation changes the relative order between
-      # two layers.
       layer.update() for layer in @layers
 
     @run_id = setInterval update, 20
