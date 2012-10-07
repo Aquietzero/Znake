@@ -81,15 +81,12 @@
       var update,
         _this = this;
       update = function() {
-        var i, _i, _ref, _results;
+        var layer, _i, _len, _ref, _results;
+        _ref = _this.layers;
         _results = [];
-        for (i = _i = 0, _ref = _this.layers.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-          if (!_this.layers[i].update()) {
-            _this.layers[i] = _this.layers[_this.layers.length - 1];
-            _results.push(_this.layers.pop());
-          } else {
-            _results.push(void 0);
-          }
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          layer = _ref[_i];
+          _results.push(layer.update());
         }
         return _results;
       };
