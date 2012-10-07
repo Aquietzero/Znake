@@ -10,9 +10,7 @@
       this.height = height;
       this.layers = [];
       this.initStage();
-      this.initTrack();
-      this.status = 'RUNNING';
-      this.initEvents();
+      this.initTracks();
     }
 
     Prelude.prototype.initStage = function() {
@@ -20,7 +18,7 @@
       return this.layers.push(this.stage);
     };
 
-    Prelude.prototype.initTrack = function() {
+    Prelude.prototype.initTracks = function() {
       var dir, pos;
       dir = {
         x: -1,
@@ -30,9 +28,8 @@
         x: 80,
         y: 30
       };
-      this.track_z = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_z = new Track(this.stage, dir, pos, 'fc0', this.container, this.width, this.height);
       this.track_z.setActions(Actions.Z);
-      this.layers.push(this.track_z);
       dir = {
         x: 0,
         y: -1
@@ -41,9 +38,8 @@
         x: 20,
         y: 42
       };
-      this.track_n = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_n = new Track(this.stage, dir, pos, 'f90', this.container, this.width, this.height);
       this.track_n.setActions(Actions.N);
-      this.layers.push(this.track_n);
       dir = {
         x: 0,
         y: -1
@@ -52,9 +48,8 @@
         x: 30,
         y: 38
       };
-      this.track_a = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_a = new Track(this.stage, dir, pos, 'f63', this.container, this.width, this.height);
       this.track_a.setActions(Actions.A);
-      this.layers.push(this.track_a);
       dir = {
         x: 0,
         y: 1
@@ -63,9 +58,8 @@
         x: 42,
         y: 10
       };
-      this.track_k = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_k = new Track(this.stage, dir, pos, 'f30', this.container, this.width, this.height);
       this.track_k.setActions(Actions.K);
-      this.layers.push(this.track_k);
       dir = {
         x: -1,
         y: 0
@@ -74,27 +68,13 @@
         x: 80,
         y: 33
       };
-      this.track_e = new Track(this.stage, dir, pos, this.container, this.width, this.height);
+      this.track_e = new Track(this.stage, dir, pos, 'f33', this.container, this.width, this.height);
       this.track_e.setActions(Actions.E);
+      this.layers.push(this.track_z);
+      this.layers.push(this.track_n);
+      this.layers.push(this.track_a);
+      this.layers.push(this.track_k);
       return this.layers.push(this.track_e);
-    };
-
-    Prelude.prototype.initEvents = function() {
-      var _this = this;
-      return document.onkeydown = function(event) {
-        switch (event.keyCode) {
-          case 38:
-            return _this.track.turn('UP');
-          case 39:
-            return _this.track.turn('RIGHT');
-          case 40:
-            return _this.track.turn('DOWN');
-          case 37:
-            return _this.track.turn('LEFT');
-          case 32:
-            return _this.pause();
-        }
-      };
     };
 
     Prelude.prototype.run = function() {
@@ -118,16 +98,6 @@
 
     Prelude.prototype.stop = function() {
       return clearInterval(this.run_id);
-    };
-
-    Prelude.prototype.pause = function() {
-      if (this.status === 'RUNNING') {
-        this.status = 'STOP';
-        return this.stop();
-      } else if (this.status === 'STOP') {
-        this.status = 'RUNNING';
-        return this.run();
-      }
     };
 
     return Prelude;

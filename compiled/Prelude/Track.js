@@ -8,11 +8,15 @@
 
     __extends(Track, _super);
 
-    function Track(map, origin_dir, origin_pos, container, width, height) {
+    function Track(map, origin_dir, origin_pos, color, container, width, height) {
       this.map = map;
       this.origin_dir = origin_dir;
       this.origin_pos = origin_pos;
+      this.color = color;
       Track.__super__.constructor.call(this, container, width, height);
+      this.red = parseInt(this.color[0], 16);
+      this.green = parseInt(this.color[1], 16);
+      this.blue = parseInt(this.color[2], 16);
       this.setBody();
     }
 
@@ -94,16 +98,31 @@
     };
 
     Track.prototype.render = function() {
-      var i, red, _i, _ref, _results;
+      var blue, green, i, red, _i, _ref, _results;
       _results = [];
       for (i = _i = 0, _ref = this.body.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        red = Math.floor(15 - 15 * i / this.body.length).toString(16);
+        red = Math.floor(this.red - this.red * i / 1.5 / this.body.length).toString(16);
         if (red.length === 1) {
           red += red;
         }
-        _results.push(this.body[i].render("" + red + red + "00"));
+        green = Math.floor(this.green - this.green * i / 1.5 / this.body.length).toString(16);
+        if (green.length === 1) {
+          green += green;
+        }
+        blue = Math.floor(this.blue - this.blue * i / 1.5 / this.body.length).toString(16);
+        if (blue.length === 1) {
+          blue += blue;
+        }
+        _results.push(this.body[i].render("" + red + green + blue));
       }
       return _results;
+      /*
+          for i in [0...@body.length]
+            red = Math.floor(15 - 15 * i / @body.length).toString 16
+            red += red if red.length is 1
+            @body[i].render "#{red}#{red}00"
+      */
+
     };
 
     Track.prototype.update = function() {

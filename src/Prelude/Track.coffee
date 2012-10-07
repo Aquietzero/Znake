@@ -2,8 +2,13 @@
 
 class Track extends Layer
 
-  constructor: (@map, @origin_dir, @origin_pos, container, width, height) ->
+  constructor: (@map, @origin_dir, @origin_pos, @color, container, width, height) ->
     super container, width, height
+
+    @red   = parseInt @color[0], 16
+    @green = parseInt @color[1], 16
+    @blue  = parseInt @color[2], 16
+
     @setBody()
 
   setActions: (actions) ->
@@ -50,9 +55,23 @@ class Track extends Layer
 
   render: ->
     for i in [0...@body.length]
+      red = Math.floor(@red - @red * i / 1.5 / @body.length).toString 16
+      red += red if red.length is 1
+
+      green = Math.floor(@green - @green * i / 1.5 / @body.length).toString 16
+      green += green if green.length is 1
+
+      blue = Math.floor(@blue - @blue * i / 1.5 / @body.length).toString 16
+      blue += blue if blue.length is 1
+
+      @body[i].render "#{red}#{green}#{blue}"
+
+    ###
+    for i in [0...@body.length]
       red = Math.floor(15 - 15 * i / @body.length).toString 16
       red += red if red.length is 1
       @body[i].render "#{red}#{red}00"
+    ###
 
   update: ->
     if @actions[@frame] is 'REFRAIN'
